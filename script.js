@@ -2,13 +2,21 @@ const STORAGE_KEY = "novel-1-save";
 const AUTO_STORAGE_KEY = "novel-1-autosave";
 const IMAGE_EXTENSIONS = ["webp", "png", "jpg", "jpeg"];
 
-const chapters = window.NOVEL_CHAPTERS || [];
 const characters = window.NOVEL_CHARACTERS || {};
 const backgrounds = window.NOVEL_BACKGROUNDS || {};
 
+function getChapters() {
+  return window.NOVEL_CHAPTERS || [];
+}
+
+function defaultChapter() {
+  const chapters = getChapters();
+  return chapters.find((item) => item.id === "chapter01") || chapters[0] || null;
+}
+
 const state = {
-  chapterId: chapters[0]?.id || "",
-  sceneId: chapters[0]?.start || "",
+  chapterId: defaultChapter()?.id || "",
+  sceneId: defaultChapter()?.start || "",
   lineIndex: 0,
   flags: {},
   backlog: []
@@ -45,12 +53,18 @@ const elements = {
   backlogList: $("#backlogList")
 };
 
-function chapter() {
-  return chapters.find((item) => item.id === state.chapterId) || chapters[0];
+function chapter(chapterId = state.chapterId) {
+  const chapters = getChapters();
+  return chapters.find((item) => item.id === chapterId) || defaultChapter();
 }
 
-function scene() {
-  return chapter().scenes[state.sceneId];
+function scene(sceneId = state.sceneId, chapterId = state.chapterId) {
+  const currentChapter = chapter(chapterId);
+  return currentChapter?.scenes?.[sceneId] || null;
+}
+
+function isValidSaveData(data) {
+  return Boolean(data?.chapterId && data?.sceneId && scene(data.sceneId, data.chapterId));
 }
 
 function characterName(idOrName) {
@@ -59,6 +73,7 @@ function characterName(idOrName) {
 }
 
 function showScreen(name) {
+  if (name === "chapters") renderChapterList();
   elements.titleScreen.classList.toggle("hidden", name !== "title");
   elements.chapterScreen.classList.toggle("hidden", name !== "chapters");
   elements.gameScreen.classList.toggle("hidden", name !== "game");
@@ -75,11 +90,25 @@ function load(key = STORAGE_KEY) {
     alert("セーブデータがまだありません。");
     return false;
   }
-  const data = JSON.parse(raw);
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch (error) {
+    localStorage.removeItem(key);
+    alert("セーブデータを読み込めませんでした。はじめから開始してください。");
+    showScreen("title");
+    return false;
+  }
+  if (!isValidSaveData(data)) {
+    localStorage.removeItem(key);
+    alert("セーブデータの章情報が古いため、はじめから開始してください。");
+    showScreen("title");
+    return false;
+  }
   Object.assign(state, {
     chapterId: data.chapterId,
     sceneId: data.sceneId,
-    lineIndex: data.lineIndex || 0,
+    lineIndex: Math.min(data.lineIndex || 0, scene(data.sceneId, data.chapterId).lines.length - 1),
     flags: data.flags || {},
     backlog: data.backlog || []
   });
@@ -89,7 +118,11 @@ function load(key = STORAGE_KEY) {
 }
 
 function startChapter(chapterId) {
-  const selected = chapters.find((item) => item.id === chapterId) || chapters[0];
+  const selected = chapter(chapterId);
+  if (!selected) {
+    alert("章データを読み込めませんでした。ページを再読み込みしてください。");
+    return;
+  }
   Object.assign(state, {
     chapterId: selected.id,
     sceneId: selected.start,
@@ -128,6 +161,10 @@ function resolveBranch(current) {
 
 function next() {
   const current = scene();
+  if (!current) {
+    render();
+    return;
+  }
   if (state.lineIndex < current.lines.length - 1) {
     state.lineIndex += 1;
     renderLine();
@@ -150,7 +187,9 @@ function choose(choice) {
 }
 
 function addCurrentLineToBacklog() {
-  const line = scene().lines[state.lineIndex];
+  const current = scene();
+  if (!current) return;
+  const line = current.lines[state.lineIndex];
   const entry = { speaker: characterName(line.speaker), text: line.text };
   const last = state.backlog[state.backlog.length - 1];
   if (!last || last.speaker !== entry.speaker || last.text !== entry.text) {
@@ -197,6 +236,8 @@ function tryImage(basePath, onFound) {
 
 function renderLine() {
   const current = scene();
+  if (!current) return;
+  state.lineIndex = Math.min(state.lineIndex, current.lines.length - 1);
   const line = current.lines[state.lineIndex];
   elements.speaker.textContent = characterName(line.speaker);
   elements.text.textContent = line.text;
@@ -222,6 +263,11 @@ function renderLine() {
 function render() {
   const currentChapter = chapter();
   const current = scene();
+  if (!currentChapter || !current) {
+    alert("章データを読み込めませんでした。タイトルへ戻ります。");
+    showScreen("title");
+    return;
+  }
   elements.chapterTitle.textContent = currentChapter.title;
   elements.sceneLabel.textContent = current.label || state.sceneId;
   setBackground(current.background);
@@ -230,7 +276,12 @@ function render() {
 }
 
 function renderChapterList() {
+  const chapters = getChapters();
   elements.chapterList.innerHTML = "";
+  if (!chapters.length) {
+    elements.chapterList.textContent = "章データを読み込めませんでした。ページを再読み込みしてください。";
+    return;
+  }
   chapters.forEach((item) => {
     const button = document.createElement("button");
     button.type = "button";
@@ -258,7 +309,7 @@ function closeMenu() {
 }
 
 function bindEvents() {
-  elements.startButton.addEventListener("click", () => startChapter(chapters[0].id));
+  elements.startButton.addEventListener("click", () => startChapter(defaultChapter()?.id));
   elements.continueButton.addEventListener("click", () => load());
   elements.chapterSelectButton.addEventListener("click", () => showScreen("chapters"));
   elements.chapterBackButton.addEventListener("click", () => showScreen("title"));

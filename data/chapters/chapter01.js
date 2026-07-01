@@ -86,7 +86,6 @@ oyg5kp-codex/confirm-non-empty-files-and-summarize-content
     // シーン3：UFO内ルール説明。
     // 目的：船内の制限を示し、主人公のツッコミとリィナの合理主義でラブコメのテンポを作る。
     rules: {
-=======
         { speaker: "liina", text: "心拍数上昇。逃走準備？　それとも照れ？" }
       ],
       choices: [
