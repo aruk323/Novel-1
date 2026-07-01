@@ -144,7 +144,7 @@ function setScene(nextSceneId) {
   save(AUTO_STORAGE_KEY);
 
   const current = scene();
-  if (current?.action === "title" || current?.action === "chapters") {
+  if (current.action === "title" || current.action === "chapters") {
     window.setTimeout(() => showScreen(current.action === "title" ? "title" : "chapters"), 550);
   }
 }
