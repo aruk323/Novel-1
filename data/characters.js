@@ -1,12 +1,19 @@
 window.NOVEL_CHARACTERS = {
-  haru: {
-    id: "haru",
-    name: "ハル",
-    description: "十年前に消えたはずの幼なじみ。夜明けの駅前に主人公を呼び出す。"
-  },
   protagonist: {
     id: "protagonist",
-    name: "あなた",
-    description: "プレイヤー視点の主人公。古い封筒をきっかけに町の謎へ向き合う。"
+    name: "ユーザー",
+    description: "プレイヤー視点の主人公。リィナに攫われた地球人代表サンプル。"
+  },
+  liina: {
+    id: "liina",
+    name: "リィナ",
+    description: "リィナ・シルヴェルグリーン。地球侵略先遣調査員で、無表情クール系の銀緑宇宙人。",
+    expressions: {
+      neutral: "無表情",
+      cool: "冷静",
+      curious: "観察中",
+      flustered: "微細な動揺",
+      proud: "得意げ"
+    }
   }
 };
