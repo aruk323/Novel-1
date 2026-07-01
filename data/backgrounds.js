@@ -1,19 +1,4 @@
 window.NOVEL_BACKGROUNDS = {
-  station_dawn: {
-    id: "station_dawn",
-    name: "夜明けの駅前",
-    file: "station-dawn"
-  },
-  clocktower: {
-    id: "clocktower",
-    name: "時計台",
-    file: "clocktower"
-  },
-  town: {
-    id: "town",
-    name: "眠る町",
-    file: "town"
-  },
   isolation_room: {
     id: "isolation_room",
     name: "主人公用隔離部屋",
@@ -26,6 +11,20 @@ window.NOVEL_BACKGROUNDS = {
     file: "ufo-observation-room",
     theme: "lab"
   },
+4begms-codex/confirm-non-empty-files-and-summarize-content
+  isolation_room: {
+    id: "isolation_room",
+    name: "主人公用隔離部屋",
+    file: "ufo-isolation-room",
+    theme: "room"
+  },
+  observation_room: {
+    id: "observation_room",
+    name: "観察室",
+    file: "ufo-observation-room",
+    theme: "lab"
+  },
+main
   food_room: {
     id: "food_room",
     name: "食事生成ルーム",
