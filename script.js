@@ -109,6 +109,11 @@ function setScene(nextSceneId) {
   render();
   addCurrentLineToBacklog();
   save(AUTO_STORAGE_KEY);
+
+  const current = scene();
+  if (current.action === "title" || current.action === "chapters") {
+    window.setTimeout(() => showScreen(current.action === "title" ? "title" : "chapters"), 550);
+  }
 }
 
 function matchesFlagRule(rule) {
@@ -156,7 +161,7 @@ function addCurrentLineToBacklog() {
 
 function setBackground(backgroundId) {
   const background = backgrounds[backgroundId] || { file: backgroundId };
-  elements.background.className = "background placeholder-bg";
+  elements.background.className = `background placeholder-bg ${background?.theme ? `bg-${background.theme}` : ""}`;
   elements.background.style.backgroundImage = "";
   if (!background?.file) return;
   tryImage(`assets/backgrounds/${background.file}`, (url) => {
@@ -170,7 +175,9 @@ function renderCharacters(sceneCharacters = []) {
   sceneCharacters.forEach((sceneCharacter) => {
     const profile = characters[sceneCharacter.id] || {};
     const node = document.createElement("div");
-    node.className = `character ${sceneCharacter.position || "center"}`;
+    const expression = sceneCharacter.expression || "neutral";
+    node.className = `character ${sceneCharacter.position || "center"} expression-${expression}`;
+    node.dataset.expression = profile.expressions?.[expression] || expression;
     node.textContent = sceneCharacter.name || profile.name || sceneCharacter.id;
     tryImage(`assets/characters/${sceneCharacter.id}`, (url) => {
       node.classList.add("has-image");
