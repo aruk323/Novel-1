@@ -1,99 +1,86 @@
 # Novel-1
 
-スマホブラウザ向けの長編ノベルゲームを、HTML / CSS / JavaScript だけで動かすための土台です。GitHub Pages にそのまま公開できます。
+スマホ・タブレットだけで編集し、GitHub Pages で公開できる長編ノベルゲーム用の基礎システムです。HTML / CSS / JavaScript のみで動きます。
 
-## 動かし方
+## できること
 
-1. このリポジトリを GitHub に push します。
-2. GitHub の **Settings > Pages** を開きます。
-3. **Deploy from a branch** を選び、公開したいブランチの `/ (root)` を指定します。
-4. 表示された URL をスマホで開くとプレイできます。
+- スマホ縦画面で読みやすいタイトル画面、章選択画面、本文画面
+- `data/chapters/` に章ごとのシナリオを分割
+- `data/characters.js` でキャラクターを一元管理
+- `data/backgrounds.js` で背景を一元管理
+- `assets/characters/`、`assets/backgrounds/`、`assets/bgm/` を使う構成
+- 画像が無い状態でも仮背景・仮立ち絵でプレイ可能
+- キャラクター名表示、選択肢、フラグ分岐
+- セーブ / ロード / オートセーブ
+- バックログ
+- 最後まで遊べる第1章サンプル
 
-ローカルで確認する場合は、リポジトリ直下で次のように簡易サーバーを起動してください。
+## GitHub Pagesで公開する方法
 
-```bash
-python3 -m http.server 8000
-```
-
-その後、ブラウザで `http://localhost:8000` を開きます。
+1. GitHub のリポジトリ画面を開きます。
+2. **Settings > Pages** を開きます。
+3. **Build and deployment** で **Deploy from a branch** を選びます。
+4. Branch は公開したいブランチ、Folder は `/ (root)` を選びます。
+5. 表示されたURLをスマホブラウザで開くと遊べます。
 
 ## ファイル構成
 
 ```text
-index.html              # ゲーム画面のHTML
-css/style.css           # スマホ縦画面向けの見た目
-js/app.js               # ノベルゲームエンジン本体
-scenarios/prologue.js   # サンプルのプロローグ
-assets/backgrounds/     # 背景画像を追加する場所
-assets/characters/      # キャラクター立ち絵を追加する場所
+index.html                 # 画面の骨組み
+style.css                  # スマホ縦画面向けデザイン
+script.js                  # ノベルゲームエンジン本体
+data/characters.js         # キャラクター管理
+data/backgrounds.js        # 背景管理
+data/chapters/chapter1.js  # 第1章サンプル
+assets/characters/         # 立ち絵画像を入れる場所
+assets/backgrounds/        # 背景画像を入れる場所
+assets/bgm/                # BGMを入れる場所
+docs/                      # 長編制作メモ用テンプレート
 ```
 
-画像が無い場合も、背景と立ち絵は仮表示で動きます。
+## スマホだけで編集する流れ
 
-## 章を追加する方法
+1. GitHubアプリ、またはスマホブラウザのGitHubで編集したいファイルを開きます。
+2. 鉛筆アイコンから編集します。
+3. 変更をコミットします。
+4. GitHub Pages のURLを開き直して確認します。
 
-章ごとに `scenarios/` の中へ JavaScript ファイルを追加します。例えば第1章なら `scenarios/chapter1.js` を作ります。
+反映に数十秒かかる場合があります。表示が変わらない場合はブラウザを再読み込みしてください。
+
+## 第1章を編集する
+
+第1章の本文は `data/chapters/chapter1.js` にあります。
 
 ```js
-window.NOVEL_SCENARIOS = window.NOVEL_SCENARIOS || {};
-
-window.NOVEL_SCENARIOS.chapter1 = {
-  id: "chapter1",
-  title: "第1章：タイトル",
-  start: "start",
-  scenes: {
-    start: {
-      label: "最初の場所",
-      background: "school",
-      characters: [{ id: "heroine", name: "ヒロイン", position: "center" }],
-      lines: [
-        { speaker: "ヒロイン", text: "ここから第1章が始まります。" }
-      ],
-      next: "nextScene"
-    },
-    nextScene: {
-      label: "次のシーン",
-      lines: [
-        { speaker: "", text: "次のシーンです。" }
-      ],
-      ending: true
-    }
-  }
-};
+lines: [
+  { speaker: "haru", text: "……来たんだね。こんな朝早くに呼び出してごめん。" },
+  { speaker: "protagonist", text: "ポストに入っていた古い封筒。" }
+]
 ```
 
-追加した章を読み込むには、`index.html` の下部に script タグを追加します。
+- `speaker` は `data/characters.js` のキャラクターIDを書くと表示名に変換されます。
+- 地の文にしたいときは `speaker: ""` にします。
+- `text` に表示したい文章を書きます。
 
-```html
-<script src="scenarios/prologue.js"></script>
-<script src="scenarios/chapter1.js"></script>
-<script src="js/app.js"></script>
-```
+## シーンを追加する
 
-最初に開始する章を変えたい場合は、`js/app.js` の `state.chapterId` を追加した章の id に変更してください。
-
-## シーンの書き方
-
-シーンは `scenes` の中に追加します。
+`scenes` の中に新しいシーンIDを追加し、前のシーンの `next` にそのIDを書きます。
 
 ```js
-sceneId: {
-  label: "画面上に出る場所名",
-  background: "背景画像のファイル名から拡張子を除いた名前",
-  characters: [
-    { id: "キャラ画像名", name: "表示名", position: "center" }
-  ],
+newScene: {
+  label: "新しい場所",
+  background: "town",
+  characters: [{ id: "haru", position: "center" }],
   lines: [
-    { speaker: "話者名", text: "表示する文章" },
-    { speaker: "", text: "地の文は speaker を空にできます。" }
+    { speaker: "haru", text: "ここが新しいシーンです。" }
   ],
-  next: "次に進むシーンID"
+  next: "nextScene"
 }
 ```
 
-## 選択肢とフラグ管理
+## 選択肢を書く
 
-最後の文章まで進むと選択肢を表示できます。`set` に書いた内容がフラグとして保存されます。
+シーンの最後で選択肢を出すには `choices` を使います。
 
 ```js
 choices: [
@@ -102,15 +89,11 @@ choices: [
 ]
 ```
 
-数値フラグに数値を指定した場合、すでに数値が入っていれば加算されます。好感度や調査ポイントに使えます。
+`set` に書いた値はフラグとして保存されます。数値フラグは、すでに数値がある場合は加算されるので好感度にも使えます。
 
-```js
-{ text: "助ける", set: { affection: 1 }, next: "afterHelp" }
-```
+## 分岐を書く
 
-## エンディング分岐
-
-`branches` を使うと、フラグに応じて次のシーンを変えられます。上から順番に判定され、最初に一致した分岐へ進みます。
+フラグによって次のシーンを変えたい場合は `branches` を使います。上から順番に判定され、最初に一致した分岐へ進みます。
 
 ```js
 branches: [
@@ -120,41 +103,52 @@ branches: [
 next: "badEnding"
 ```
 
-エンディングのシーンには `ending: true` を付けます。
+## 章を追加する
 
-```js
-goodEnding: {
-  label: "Good Ending",
-  lines: [{ speaker: "", text: "グッドエンドです。" }],
-  ending: true
-}
+1. `data/chapters/chapter2.js` を作ります。
+2. `data/chapters/chapter1.js` をコピーして、`id`、`title`、`summary`、`scenes` を書き換えます。
+3. `index.html` の下部に読み込みを追加します。
+
+```html
+<script src="data/chapters/chapter1.js"></script>
+<script src="data/chapters/chapter2.js"></script>
+<script src="script.js"></script>
 ```
 
-## 背景画像と立ち絵の追加方法
+## キャラクターを追加する
 
-背景画像は `assets/backgrounds/` に入れます。シーンで `background: "station"` と書いた場合、次のどれかの画像を探します。
+`data/characters.js` にID、表示名、メモを追加します。
 
-- `assets/backgrounds/station.webp`
-- `assets/backgrounds/station.png`
-- `assets/backgrounds/station.jpg`
-- `assets/backgrounds/station.jpeg`
+```js
+window.NOVEL_CHARACTERS = {
+  haru: { id: "haru", name: "ハル", description: "幼なじみ。" },
+  mio: { id: "mio", name: "ミオ", description: "第2章で登場する少女。" }
+};
+```
 
-立ち絵は `assets/characters/` に入れます。`{ id: "haru", name: "ハル" }` と書いた場合、次のどれかを探します。
+立ち絵を使う場合は `assets/characters/mio.png` のように配置します。対応拡張子は `webp`、`png`、`jpg`、`jpeg` です。
 
-- `assets/characters/haru.webp`
-- `assets/characters/haru.png`
-- `assets/characters/haru.jpg`
-- `assets/characters/haru.jpeg`
+## 背景を追加する
 
-画像がまだ無い場合は、仮の背景とシルエット風の立ち絵が表示されます。
+`data/backgrounds.js` に背景IDと画像ファイル名を追加します。
 
-## セーブ / ロード
+```js
+window.NOVEL_BACKGROUNDS = {
+  town: { id: "town", name: "眠る町", file: "town" }
+};
+```
 
-画面右上のメニューから次の操作ができます。
+背景画像は `assets/backgrounds/town.png` のように配置します。画像が無い場合は仮背景で動きます。
 
-- **セーブ**: `localStorage` に手動セーブします。
-- **ロード**: 手動セーブから再開します。
-- **オートセーブから再開**: 進行時に自動保存された場所から再開します。
-- **最初から**: フラグをリセットしてプロローグ冒頭へ戻ります。
+## 制作メモを書く
 
-保存データはブラウザごとに保存されます。別の端末や別のブラウザには引き継がれません。
+長編制作では、設定を別ファイルに分けておくと便利です。
+
+- `docs/STORY_BIBLE.md`: 世界観、テーマ、謎、結末
+- `docs/CHARACTER_BIBLE.md`: キャラクター設定
+- `docs/CHAPTER_PLAN.md`: 章ごとの展開表
+- `docs/WRITING_RULES.md`: 文体、表記、演出ルール
+
+## セーブデータについて
+
+セーブデータはブラウザの `localStorage` に保存されます。同じGitHub Pages URLでも、別端末・別ブラウザには引き継がれません。
