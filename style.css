@@ -185,3 +185,80 @@ h1 { font-size: clamp(2.4rem, 13vw, 4rem); }
 .backlog-line { padding-bottom: .75rem; border-bottom: 1px solid rgba(255,255,255,.12); line-height: 1.7; }
 .backlog-line strong { color: #fde68a; }
 @media (min-width: 700px) { .stage, .screen { min-height: min(100svh, 920px); } .stage { border-radius: 28px; } }
+
+/* Chapter 01 playable build: image-free placeholders for UFO scenes and expression states. */
+.bg-room {
+  background:
+    linear-gradient(rgba(2, 6, 23, 0.12), rgba(2, 6, 23, 0.34)),
+    radial-gradient(circle at 50% 18%, rgba(167, 243, 208, 0.38), transparent 22%),
+    linear-gradient(160deg, #dbeafe 0%, #64748b 42%, #0f172a 100%);
+}
+.bg-lab {
+  background:
+    linear-gradient(rgba(2, 6, 23, 0.16), rgba(2, 6, 23, 0.38)),
+    repeating-linear-gradient(90deg, rgba(52, 211, 153, 0.18) 0 2px, transparent 2px 46px),
+    radial-gradient(circle at 50% 26%, rgba(16, 185, 129, 0.48), transparent 18%),
+    linear-gradient(180deg, #e2e8f0 0%, #475569 48%, #020617 100%);
+}
+.bg-food {
+  background:
+    linear-gradient(rgba(2, 6, 23, 0.12), rgba(2, 6, 23, 0.34)),
+    radial-gradient(circle at 68% 38%, rgba(245, 158, 11, 0.56), transparent 13%),
+    radial-gradient(circle at 32% 28%, rgba(52, 211, 153, 0.42), transparent 17%),
+    linear-gradient(145deg, #cbd5e1 0%, #334155 54%, #111827 100%);
+}
+.bg-corridor {
+  background:
+    linear-gradient(rgba(2, 6, 23, 0.2), rgba(2, 6, 23, 0.42)),
+    linear-gradient(90deg, transparent 0 46%, rgba(52, 211, 153, 0.5) 49% 51%, transparent 54% 100%),
+    repeating-linear-gradient(0deg, rgba(148, 163, 184, 0.22) 0 4px, transparent 4px 42px),
+    linear-gradient(160deg, #94a3b8 0%, #1e293b 52%, #020617 100%);
+}
+.bg-earth {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(59, 130, 246, 0.9) 0 13%, rgba(16, 185, 129, 0.72) 14% 19%, rgba(15, 23, 42, 0.15) 20% 24%, transparent 25%),
+    radial-gradient(circle at 50% 42%, rgba(191, 219, 254, 0.16), transparent 34%),
+    radial-gradient(circle at 50% 12%, rgba(52, 211, 153, 0.42), transparent 18%),
+    linear-gradient(180deg, #020617 0%, #0f172a 50%, #111827 100%);
+}
+.character::before,
+.character::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.character {
+  position: relative;
+  overflow: visible;
+  background:
+    radial-gradient(circle at 42% 22%, rgba(236, 253, 245, 0.95) 0 4%, transparent 5%),
+    radial-gradient(circle at 58% 22%, rgba(236, 253, 245, 0.95) 0 4%, transparent 5%),
+    linear-gradient(180deg, rgba(226,232,240,.92), rgba(45,212,191,.5) 52%, rgba(15,23,42,.86));
+}
+.character::before {
+  left: 38%;
+  right: 38%;
+  top: -12%;
+  height: 24%;
+  border-left: 2px solid rgba(167, 243, 208, 0.92);
+  border-right: 2px solid rgba(167, 243, 208, 0.92);
+  filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.8));
+}
+.character::after {
+  left: 50%;
+  bottom: .8rem;
+  transform: translateX(-50%);
+  content: attr(data-expression);
+  padding: .2rem .55rem;
+  border-radius: 999px;
+  background: rgba(2, 6, 23, .58);
+  color: #bbf7d0;
+  font-size: .72rem;
+  white-space: nowrap;
+}
+.character.expression-flustered { filter: drop-shadow(0 0 18px rgba(244, 114, 182, .5)); }
+.character.expression-flustered::before { border-color: rgba(244, 114, 182, .95); }
+.character.expression-proud { filter: drop-shadow(0 0 18px rgba(250, 204, 21, .42)); }
+.character.expression-cool { filter: drop-shadow(0 0 18px rgba(125, 211, 252, .38)); }
+.character.left { transform: translateX(-22%); }
+.character.right { transform: translateX(22%); }
