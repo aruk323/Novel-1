@@ -204,8 +204,9 @@ function renderLine() {
 
   const isLastLine = state.lineIndex === current.lines.length - 1;
   const canChoose = isLastLine && current.choices?.length;
-  elements.nextButton.classList.toggle("hidden", Boolean(canChoose || current.ending));
-  elements.nextButton.textContent = current.ending ? "終了" : "次へ";
+  const isTerminalLine = isLastLine && current.ending && !canChoose;
+  elements.nextButton.classList.toggle("hidden", Boolean(canChoose || isTerminalLine));
+  elements.nextButton.textContent = isTerminalLine ? "終了" : "次へ";
 
   if (canChoose) {
     current.choices.forEach((choice) => {
