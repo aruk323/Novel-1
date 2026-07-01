@@ -12,6 +12,7 @@ window.NOVEL_BACKGROUNDS = {
     theme: "lab"
   },
 4begms-codex/confirm-non-empty-files-and-summarize-content
+main
   isolation_room: {
     id: "isolation_room",
     name: "主人公用隔離部屋",
