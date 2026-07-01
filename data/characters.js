@@ -1,6 +1,4 @@
 window.NOVEL_CHARACTERS = {
- 4begms-codex/confirm-non-empty-files-and-summarize-content
-  main
   protagonist: {
     id: "protagonist",
     name: "ユーザー",
