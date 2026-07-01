@@ -1,4 +1,9 @@
 window.NOVEL_CHARACTERS = {
+  haru: {
+    id: "haru",
+    name: "ハル",
+    description: "幼なじみ。夜明けの町で主人公を待っている。"
+  },
   protagonist: {
     id: "protagonist",
     name: "ユーザー",
