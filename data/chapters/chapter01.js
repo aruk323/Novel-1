@@ -3,20 +3,17 @@ window.NOVEL_CHAPTERS = window.NOVEL_CHAPTERS || [];
 window.NOVEL_CHAPTERS.push({
   id: "chapter01",
   title: "第1章：銀緑の来訪者",
-oyg5kp-codex/confirm-non-empty-files-and-summarize-content
   summary: "UFOで目覚めた主人公が、リィナとの観察生活、脱出未遂、名前呼びを体験する第1章本番用の前半拡張版。",
   start: "wake",
   scenes: {
     // シーン1：観察対象としての朝。
     // 目的：主人公が攫われた状況を思い出し、リィナの近さ・観察癖・無表情な危うさを同時に見せる。
-main
     wake: {
       label: "観察対象としての朝",
       background: "isolation_room",
       characters: [{ id: "liina", position: "center", expression: "neutral" }],
       lines: [
         { speaker: "", text: "銀色の天井に、緑の光が細く走っていた。\n目を開けても、そこは昨日までの部屋ではない。" },
-yg5kp-codex/confirm-non-empty-files-and-summarize-content
         { speaker: "", text: "ベッドは柔らかい。けれど、匂いがない。\n布団の重さも、窓から入る朝の音もない。" },
         { speaker: "liina", text: "覚醒を確認。地球個体001、睡眠時間は六時間十二分。" },
         { speaker: "protagonist", text: "……おはよう、で合ってる？" },
@@ -30,13 +27,11 @@ yg5kp-codex/confirm-non-empty-files-and-summarize-content
 
     // シーン2：最初の反応選択。
     // 目的：主人公の態度を選ばせ、選択直後にリィナの反応を入れて好感・警戒・名前意識を初期化する。
-main
     morningChoice: {
       label: "朝の反応",
       background: "isolation_room",
       characters: [{ id: "liina", position: "center", expression: "curious" }],
       lines: [
-oyg5kp-codex/confirm-non-empty-files-and-summarize-content
         { speaker: "liina", text: "心拍数上昇。逃走準備？　それとも照れ？" },
         { speaker: "", text: "彼女は首を少し傾けた。\n表情は変わらないのに、観察装置だけが忙しく光っている。" }
       ],
@@ -86,29 +81,10 @@ oyg5kp-codex/confirm-non-empty-files-and-summarize-content
     // シーン3：UFO内ルール説明。
     // 目的：船内の制限を示し、主人公のツッコミとリィナの合理主義でラブコメのテンポを作る。
     rules: {
-        { speaker: "liina", text: "心拍数上昇。逃走準備？　それとも照れ？" }
-      ],
-      choices: [
-        { text: "近いから照れていると正直に言う", set: { affection: 1, honest: true }, next: "rules_honest" },
-        { text: "逃げる準備だと強がる", set: { escape: 1, defiant: true }, next: "rules_defiant" },
-        { text: "サンプル呼びをまず訂正する", set: { nameWish: 1 }, next: "rules_name" }
-      ]
-    },
-    rules_honest: {
-      label: "UFO内ルール説明",
-      background: "observation_room",
-      characters: [{ id: "liina", position: "center", expression: "flustered" }],
-      lines: [
-        { speaker: "liina", text: "照れ。地球人の接近反応として記録する。……私の発光ラインの変化は、無関係。" },
-        { speaker: "", text: "彼女は端末を開き、こちらの反論を待たずに船内規則を表示した。" }
-      ],
-      next: "rules_common"
-main
       label: "船内規則",
       background: "observation_room",
       characters: [{ id: "liina", position: "center", expression: "neutral" }],
       lines: [
-oyg5kp-codex/confirm-non-empty-files-and-summarize-content
         { speaker: "", text: "リィナは端末を空中に浮かべた。\n薄い光の板に、読めない文字と丸い警告マークが並ぶ。" },
         { speaker: "liina", text: "規則一。許可なく船外へ出ない。" },
         { speaker: "liina", text: "規則二。緑色に光る装置へ触れない。" },
@@ -160,20 +136,17 @@ oyg5kp-codex/confirm-non-empty-files-and-summarize-content
 
     // シーン6：初めての食事イベント。
     // 目的：リィナのポンコツさを見せつつ、選択で主人公の優しさ・正直さ・地球文化説明を分岐させる。
-main
     meal: {
       label: "初めての食事イベント",
       background: "food_room",
       characters: [{ id: "liina", position: "center", expression: "proud" }],
       lines: [
-oyg5kp-codex/confirm-non-empty-files-and-summarize-content
         { speaker: "", text: "食事生成ルームは、台所というより小さな研究室だった。" },
         { speaker: "", text: "透明な箱の中で、黄色い液体と黒い粒と赤いソースが回転している。" },
         { speaker: "liina", text: "地球料理を再現した。カレー、プリン、ラーメン、たこ焼き。人気栄養素を統合。" },
         { speaker: "protagonist", text: "統合しないで。料理は合体ロボじゃない。" },
         { speaker: "", text: "皿の上では、甘くて辛くて海の匂いがする何かが、ゆっくり泡を立てていた。" },
         { speaker: "liina", text: "見た目の評価を求める。成功？" }
-main
       ],
       choices: [
         { text: "正直に、失敗だと伝える", set: { honest: true, affection: 1 }, next: "meal_honest" },
@@ -182,7 +155,6 @@ main
       ]
     },
     meal_honest: {
-oyg5kp-codex/confirm-non-empty-files-and-summarize-content
       label: "料理の学習：正直",
       background: "food_room",
       characters: [{ id: "liina", position: "center", expression: "flustered" }],
@@ -236,7 +208,6 @@ oyg5kp-codex/confirm-non-empty-files-and-summarize-content
 
     // シーン7：脱出未遂。
     // 目的：主人公が帰還を望む自然な反応を示し、UFO内の不穏さと地球観測ドームへの導線を作る。
-main
     escape: {
       label: "脱出未遂",
       background: "corridor",
@@ -244,7 +215,6 @@ main
       lines: [
         { speaker: "", text: "食後。リィナが端末に夢中になった隙に、隔離部屋の外へ出た。" },
         { speaker: "", text: "白銀の通路は静かで、床の緑のラインだけが呼吸みたいに明滅している。" },
-oyg5kp-codex/confirm-non-empty-files-and-summarize-content
         { speaker: "", text: "遠くで、低い機械音が鳴った。\n心臓の音と重なって、どちらが自分のものか分からなくなる。" },
         { speaker: "protagonist", text: "出口……いや、せめて地球が見える場所は。" },
         { speaker: "", text: "さっき見た丸い扉。\n地球観測ドーム、とリィナは言っていた。" },
@@ -255,14 +225,12 @@ oyg5kp-codex/confirm-non-empty-files-and-summarize-content
 
     // シーン8：地球観測ドーム。
     // 目的：第1章の山場として、主人公に「本当に攫われた」孤独と帰りたい気持ちを実感させる。
-main
     dome: {
       label: "地球観測ドーム",
       background: "earth_dome",
       characters: [],
       lines: [
         { speaker: "", text: "扉が開いた先に、青い星があった。" },
-oyg5kp-codex/confirm-non-empty-files-and-summarize-content
         { speaker: "", text: "地球。\n昨日まで歩いていた街も、コンビニも、帰り道も、全部あの光の中にある。" },
         { speaker: "", text: "手を伸ばしても届かない。\n声を出しても、誰にも聞こえない。" },
         { speaker: "", text: "本当に攫われたのだと、ようやく実感した。" },
@@ -273,7 +241,6 @@ oyg5kp-codex/confirm-non-empty-files-and-summarize-content
 
     // シーン9：リィナとの会話。
     // 目的：逃走を責めないリィナを見せ、冷酷さだけではないが危険でもある距離感を保つ。
-main
     domeChoice: {
       label: "地球を見下ろして",
       background: "earth_dome",
@@ -281,7 +248,6 @@ main
       lines: [
         { speaker: "liina", text: "船外へ出れば死ぬ。逃走経路としては不適切。" },
         { speaker: "protagonist", text: "追ってきたのに、怒らないんだ。" },
-oyg5kp-codex/confirm-non-empty-files-and-summarize-content
         { speaker: "liina", text: "怒りは非効率。君の喪失は、観察計画の重大な損失。" },
         { speaker: "", text: "言い方は冷たい。\nけれど、彼女は扉を閉じず、隣に立った。" },
         { speaker: "liina", text: "地球は脆い。だが、光は多い。解析には時間が必要。" }
@@ -347,7 +313,6 @@ oyg5kp-codex/confirm-non-empty-files-and-summarize-content
         { speaker: "", text: "リィナは少しだけ間を置いた。\n端末の記録欄から、番号の一部が消える。" },
         { speaker: "liina", text: "……ユーザー。発音は、これで正しい？" },
         { speaker: "", text: "彼女の声はいつも通り平らだった。\nけれど、アンテナは少しだけ揺れていた。" }
-main
       ],
       next: "last_record"
     },
@@ -357,19 +322,28 @@ main
       characters: [{ id: "liina", position: "center", expression: "curious" }],
       lines: [
         { speaker: "", text: "その夜。観察室の端末に、リィナの記録が残っていた。" },
-oyg5kp-codex/confirm-non-empty-files-and-summarize-content
         { speaker: "liina", text: "地球個体――ユーザーは、予測より騒がしい。非効率。" },
         { speaker: "liina", text: "逃走意志あり。帰還欲求あり。名称への反応強め。" },
         { speaker: "liina", text: "料理再現は失敗。次回、分離調理を実施。" },
         { speaker: "", text: "記録はそこで一度止まっていた。\n数秒後、短い追記が入る。" },
-main
         { speaker: "liina", text: "一緒にいると、退屈しない。" },
         { speaker: "", text: "第1章クリア。銀緑の来訪者との共同生活は、まだ始まったばかりだ。" }
       ],
       choices: [
-        { text: "タイトルへ戻る", set: { chapter01Clear: true }, next: "return_title" },
-        { text: "章選択へ戻る", set: { chapter01Clear: true }, next: "return_chapters" }
+        { text: "第2章へ進む", set: { chapter01Clear: true }, next: "go_chapter02" },
+        { text: "章選択へ戻る", set: { chapter01Clear: true }, next: "return_chapters" },
+        { text: "タイトルへ戻る", set: { chapter01Clear: true }, next: "return_title" }
       ],
+      ending: true
+    },
+    go_chapter02: {
+      label: "第2章へ進みます",
+      background: "earth_dome",
+      lines: [
+        { speaker: "", text: "第2章へ進みます。" }
+      ],
+      action: "chapter",
+      chapter: "chapter02",
       ending: true
     },
     return_title: {
