@@ -35,10 +35,47 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "リィナは首を少し傾けた。\nアンテナの先が、こちらの言葉を測るように小さく明滅する。" }
       ],
       choices: [
-        { text: "睡眠中の映像保存をやめてほしい", set: { privacy: 1, trust: 1 }, next: "daily_schedule" },
-        { text: "観察するなら自分もリィナを観察する", set: { curiosity: 1, affection: 1 }, next: "daily_schedule" },
-        { text: "名前で呼ぶことを生活ルールに入れる", set: { nameWish: 1, affection: 1 }, next: "daily_schedule" }
+        { text: "睡眠中の映像保存をやめてほしい", set: { privacy: 1, trust: 1 }, next: "privacy_sleep_reaction" },
+        { text: "観察するなら自分もリィナを観察する", set: { curiosity: 1, affection: 1 }, next: "privacy_observe_reaction" },
+        { text: "名前で呼ぶことを生活ルールに入れる", set: { nameWish: 1, affection: 1 }, next: "privacy_name_reaction" }
       ]
+    },
+
+    privacy_sleep_reaction: {
+      label: "生活ルール：睡眠",
+      background: "sleep_room",
+      characters: [{ id: "liina", position: "center", expression: "cool" }],
+      lines: [
+        { speaker: "protagonist", text: "睡眠中の映像保存をやめてほしい。休む時くらい、観察対象じゃなくて人間でいたい。" },
+        { speaker: "liina", text: "睡眠中は無防備で、観察価値が高い。" },
+        { speaker: "", text: "リィナのアンテナが、ほんの少しだけ下がった。" },
+        { speaker: "liina", text: "……ただし、重要個体の休息も実験継続に必要。映像保存を停止する。数値記録のみ。" }
+      ],
+      next: "daily_schedule"
+    },
+    privacy_observe_reaction: {
+      label: "生活ルール：相互観察",
+      background: "observation_room",
+      characters: [{ id: "liina", position: "center", expression: "flustered" }],
+      lines: [
+        { speaker: "protagonist", text: "観察するなら、こっちもリィナを観察する。フェアにいこう。" },
+        { speaker: "liina", text: "私を？　観察対象が観察者を観察する。構造が反転。" },
+        { speaker: "", text: "声は平らなのに、発光ラインだけが忙しく明滅した。" },
+        { speaker: "liina", text: "許可する。私は優秀なので、観察されても問題ない。たぶん。" }
+      ],
+      next: "daily_schedule"
+    },
+    privacy_name_reaction: {
+      label: "生活ルール：名前",
+      background: "isolation_room",
+      characters: [{ id: "liina", position: "center", expression: "curious" }],
+      lines: [
+        { speaker: "protagonist", text: "名前で呼ぶことを生活ルールに入れてほしい。サンプルじゃなくて、ユーザー。" },
+        { speaker: "liina", text: "名称指定を生活規則へ登録。ユーザー。発音確認、完了。" },
+        { speaker: "", text: "リィナは一度だけ、端末ではなくこちらを見て名前を繰り返した。" },
+        { speaker: "liina", text: "識別番号より非効率。でも、君の反応は安定する。採用する。" }
+      ],
+      next: "daily_schedule"
     },
 
     // シーン3：共同生活スケジュール。
@@ -71,10 +108,47 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "では、君が分類して。地球人監修データとして採用する。" }
       ],
       choices: [
-        { text: "まずゲームから教える", set: { culture: 1, curiosity: 1 }, next: "romance_misread" },
-        { text: "漫画は感情を学びやすいと勧める", set: { earthCulture: 1, affection: 1 }, next: "romance_misread" },
-        { text: "恋愛ドラマは危険だから後回しにする", set: { caution: 1 }, next: "romance_misread" }
+        { text: "まずゲームから教える", set: { culture: 1, curiosity: 1 }, next: "media_game_reaction" },
+        { text: "漫画は感情を学びやすいと勧める", set: { earthCulture: 1, affection: 1 }, next: "media_manga_reaction" },
+        { text: "恋愛ドラマは危険だから後回しにする", set: { caution: 1 }, next: "media_drama_reaction" }
       ]
+    },
+
+    media_game_reaction: {
+      label: "娯楽分類：ゲーム",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "proud" }],
+      lines: [
+        { speaker: "protagonist", text: "まずゲームから。勝ったり負けたりしながら楽しむものだよ。" },
+        { speaker: "liina", text: "勝敗訓練。侵略シミュレーターとして理解した。" },
+        { speaker: "protagonist", text: "違う。いや、少しだけ合ってるのが困る。" },
+        { speaker: "", text: "リィナは真剣にうなずき、ゲームを『友好型戦闘訓練』へ分類した。" }
+      ],
+      next: "romance_misread"
+    },
+    media_manga_reaction: {
+      label: "娯楽分類：漫画",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "curious" }],
+      lines: [
+        { speaker: "protagonist", text: "漫画は感情を学びやすいと思う。絵で表情も分かるし。" },
+        { speaker: "liina", text: "表情学習教材。地球人は感情を線と影で圧縮保存する。" },
+        { speaker: "", text: "リィナはページをめくるたび、登場人物の照れ顔と自分のアンテナを見比べた。" },
+        { speaker: "liina", text: "この頬の赤化は、発光ラインの異常と同義？　要検証。" }
+      ],
+      next: "romance_misread"
+    },
+    media_drama_reaction: {
+      label: "娯楽分類：恋愛ドラマ",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "cool" }],
+      lines: [
+        { speaker: "protagonist", text: "恋愛ドラマは危険だから後回し。リィナが変な誤解をしそう。" },
+        { speaker: "liina", text: "危険指定。つまり優先調査対象。" },
+        { speaker: "protagonist", text: "そういう意味じゃない。" },
+        { speaker: "", text: "止める前に、壁の中央へ恋愛ドラマが拡大表示された。" }
+      ],
+      next: "romance_misread"
     },
 
     // シーン5：恋愛ドラマの誤解。
@@ -105,10 +179,47 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "差し出された手は冷たそうに見えて、指先だけ淡く光っていた。\nリィナは無表情だが、アンテナの先は落ち着きなく揺れている。" }
       ],
       choices: [
-        { text: "素直に手を繋ぐ", set: { affection: 1, trust: 1 }, next: "gravity_trouble" },
-        { text: "嫌になったら離す条件で受ける", set: { trust: 1, freeWill: 1 }, next: "gravity_trouble" },
-        { text: "リィナの方が照れてないか聞く", set: { affection: 1, dependence: 1 }, next: "gravity_trouble" }
+        { text: "素直に手を繋ぐ", set: { affection: 1, trust: 1 }, next: "hand_accept_reaction" },
+        { text: "嫌になったら離す条件で受ける", set: { trust: 1, freeWill: 1 }, next: "hand_terms_reaction" },
+        { text: "リィナの方が照れてないか聞く", set: { affection: 1, dependence: 1 }, next: "hand_tease_reaction" }
       ]
+    },
+
+    hand_accept_reaction: {
+      label: "接触実験：受諾",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "flustered" }],
+      lines: [
+        { speaker: "", text: "リィナの手を握る。思ったより柔らかく、少しだけ温かい。" },
+        { speaker: "liina", text: "君の心拍数上昇。私の発光ラインも上昇。後者は機器誤差。" },
+        { speaker: "protagonist", text: "機器誤差にしては、アンテナが揺れてる。" },
+        { speaker: "liina", text: "船内気流。たぶん。" }
+      ],
+      next: "gravity_trouble"
+    },
+    hand_terms_reaction: {
+      label: "接触実験：条件",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "neutral" }],
+      lines: [
+        { speaker: "protagonist", text: "嫌になったらすぐ離す。それが条件。" },
+        { speaker: "liina", text: "自由意志の確認。地球人は接触にも契約を必要とする。" },
+        { speaker: "", text: "彼女は真面目にうなずき、恐る恐る指を重ねた。" },
+        { speaker: "liina", text: "条件を遵守する。……離す条件は、まだ発生していない。" }
+      ],
+      next: "gravity_trouble"
+    },
+    hand_tease_reaction: {
+      label: "接触実験：動揺",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "flustered" }],
+      lines: [
+        { speaker: "protagonist", text: "リィナの方が照れてない？　アンテナがすごく動いてる。" },
+        { speaker: "liina", text: "照れではない。接触前演算の予備運動。" },
+        { speaker: "", text: "言い訳の間も、差し出された手は引っ込まなかった。" },
+        { speaker: "liina", text: "観察を継続する。君が手を取るまで、私は正常。" }
+      ],
+      next: "gravity_trouble"
     },
 
     // シーン7：重力制御トラブル。
@@ -142,10 +253,47 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "一番新しいフォルダ名は、『ユーザーといる時の異常安定』だった。" }
       ],
       choices: [
-        { text: "記録が多すぎて少し怖いと言う", set: { caution: 1, freeWill: 1 }, next: "antenna_warning" },
-        { text: "大事に記録してくれたのは分かると言う", set: { affection: 1, trust: 1 }, next: "antenna_warning" },
-        { text: "自分にもリィナの記録を作らせてほしい", set: { curiosity: 1, affection: 1 }, next: "antenna_warning" }
+        { text: "記録が多すぎて少し怖いと言う", set: { caution: 1, freeWill: 1 }, next: "data_fear_reaction" },
+        { text: "大事に記録してくれたのは分かると言う", set: { affection: 1, trust: 1 }, next: "data_accept_reaction" },
+        { text: "自分にもリィナの記録を作らせてほしい", set: { curiosity: 1, affection: 1 }, next: "data_record_reaction" }
       ]
+    },
+
+    data_fear_reaction: {
+      label: "観察記録：警戒",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "cool" }],
+      lines: [
+        { speaker: "protagonist", text: "正直、少し怖い。大事にされているのと、管理されているのは違う。" },
+        { speaker: "liina", text: "管理。否定はできない。私は侵略者だから。" },
+        { speaker: "", text: "淡々とした声が、研究室の冷たい空気に落ちた。" },
+        { speaker: "liina", text: "ただし、君の拒否反応は記録する。次回から距離を調整する。" }
+      ],
+      next: "antenna_warning"
+    },
+    data_accept_reaction: {
+      label: "観察記録：受容",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "flustered" }],
+      lines: [
+        { speaker: "protagonist", text: "多すぎるけど、大事に記録してくれたのは分かる。" },
+        { speaker: "liina", text: "大事。記録密度の増加理由として妥当な語。" },
+        { speaker: "", text: "リィナは端末のフォルダ名を一瞬だけ隠した。隠すには、少し遅かった。" },
+        { speaker: "liina", text: "この反応は、保存する。削除しない。" }
+      ],
+      next: "antenna_warning"
+    },
+    data_record_reaction: {
+      label: "観察記録：相互記録",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "curious" }],
+      lines: [
+        { speaker: "protagonist", text: "自分にもリィナの記録を作らせてほしい。観察されっぱなしは落ち着かない。" },
+        { speaker: "liina", text: "私の記録。内容を事前検閲したい。" },
+        { speaker: "protagonist", text: "それは観察じゃなくて検閲。" },
+        { speaker: "", text: "リィナは少し考えてから、新しい空白フォルダをこちらへ渡した。" }
+      ],
+      next: "antenna_warning"
     },
 
     // シーン9：アンテナ能力説明。
@@ -180,7 +328,8 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "私は隣室で待機する。君が近くにいる方が、観察効率が安定する。" },
         { speaker: "", text: "それは、少しだけ別の言葉に聞こえた。\n本人はまだ、その言葉を知らないふりをしている。" },
         { speaker: "liina", text: "おやすみ、ユーザー。発音は、これで正しい？" },
-        { speaker: "", text: "第2章前半クリア。共同生活は、もう実験だけでは説明できなくなり始めていた。" }
+        { speaker: "", text: "第2章前半クリア。共同生活は、もう実験だけでは説明できなくなり始めていた。" },
+        { speaker: "", text: "次は、リィナが本物の地球文化を調べる番だ。\nコンビニの光、学校のざわめき、夜の街。UFOの外にある日常が、二人を待っている。" }
       ],
       choices: [
         { text: "章選択へ戻る", set: { chapter02Clear: true }, next: "return_chapters" },
