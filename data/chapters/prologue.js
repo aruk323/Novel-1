@@ -43,7 +43,7 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "一歩踏み出した。\nけれど靴底は地面を離れ、体だけがふわりと持ち上がる。" },
         { speaker: "", text: "全力疾走の予定は、空中足踏みという情けない結果に変わった。" }
       ],
-      next: "first_contact"
+      next: "blackout"
     },
 
     try_record: {
@@ -55,7 +55,7 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "カメラを向けた画面には、緑のノイズだけが映った。\n次の瞬間、スマホが勝手に『観察対象』と表示する。" },
         { speaker: "protagonist", text: "スマホまでそっち側になるな。" }
       ],
-      next: "first_contact"
+      next: "blackout"
     },
 
     try_call: {
@@ -67,16 +67,42 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "叫んだはずの声は、緑の光に吸われた。\n周りの窓は一つも開かない。" },
         { speaker: "", text: "世界から、自分だけが切り取られていく。" }
       ],
+      next: "blackout"
+    },
+
+    blackout: {
+      label: "途切れる夜",
+      background: "earth_night",
+      characters: [],
+      lines: [
+        { speaker: "", text: "緑の光が視界を塗りつぶした。\n足元の道路も、街の音も、遠ざかっていく。" },
+        { speaker: "", text: "体は浮いているのに、意識だけが深い水の底へ沈んでいくようだった。" },
+        { speaker: "", text: "最後に見えたのは、夜空を横切る銀色の円盤。\nそれから、何も分からなくなった。" }
+      ],
+      next: "between_dream"
+    },
+
+    between_dream: {
+      label: "知らない時間",
+      background: "dark_space",
+      characters: [],
+      lines: [
+        { speaker: "", text: "どれくらい時間が経ったのか分からない。\n眠っていたのか、気を失っていたのかも曖昧だった。" },
+        { speaker: "", text: "耳の奥で、知らない言語のような電子音が鳴っている。\n時々、まぶたの裏を緑の線が走った。" },
+        { speaker: "", text: "誰かが近くで言った。\n冷たく、静かな声だった。" },
+        { speaker: "liina", text: "転送後反応、安定。記憶混濁あり。観察には支障なし。" }
+      ],
       next: "first_contact"
     },
 
     first_contact: {
-      label: "先遣調査員",
+      label: "目覚め",
       background: "ship_hangar",
       characters: [{ id: "liina", position: "center", expression: "neutral" }],
       lines: [
-        { speaker: "", text: "気づくと、足元は銀色の床だった。\n壁には血管のように緑の光が走っている。" },
-        { speaker: "liina", text: "転送成功。地球個体、損傷なし。" },
+        { speaker: "", text: "目を開けると、足元は銀色の床だった。\n壁には血管のように緑の光が走っている。" },
+        { speaker: "", text: "体は重い。\nけれど、どこも痛くはない。そこが逆に怖かった。" },
+        { speaker: "liina", text: "覚醒を確認。地球個体、損傷なし。" },
         { speaker: "", text: "目の前にいた少女は、銀色の髪と緑の瞳をしていた。\n頭のアンテナが、淡く光っている。" },
         { speaker: "protagonist", text: "……ここ、どこ。君は誰。あと、帰して。" },
         { speaker: "liina", text: "質問が多い。処理順を指定して。" },
@@ -116,11 +142,24 @@ window.NOVEL_CHAPTERS.push({
     },
 
     next_chapter: {
+      label: "プロローグ終了",
+      background: "isolation_room",
+      characters: [],
+      lines: [
+        { speaker: "", text: "こうして、いつもの夜は終わった。\nけれど、すぐに朝が来るわけではなかった。" },
+        { speaker: "", text: "知らない部屋の天井を見つめながら、まぶたが少しずつ重くなる。\n次に目を覚ました時、自分はもう観察対象になっている。" }
+      ],
+      choices: [
+        { text: "第1章へ進む", next: "start_chapter01" }
+      ]
+    },
+
+    start_chapter01: {
       label: "第1章へ",
       background: "isolation_room",
       characters: [],
       lines: [
-        { speaker: "", text: "こうして、いつもの夜は終わった。\nそして、観察対象としての朝が始まる。" }
+        { speaker: "", text: "翌朝。\n観察対象としての一日が始まる。" }
       ],
       action: "chapter",
       chapter: "chapter01"
