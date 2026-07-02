@@ -11,7 +11,7 @@
   <main id="app" class="app">
     <section id="titleScreen" class="screen title-screen">
       <!-- Version policy: small changes +0.01, major changes +0.1. -->
-      <p class="version-badge" aria-label="現在のバージョン">ver1.40</p>
+      <p class="version-badge" aria-label="現在のバージョン">ver1.41</p>
       <div class="screen-card">
         <p class="eyebrow">Lovely Encounter</p>
         <h1>愛のアブダクション</h1>
@@ -49,6 +49,7 @@
       <section id="menuPanel" class="menu-panel hidden" aria-label="メニュー">
         <button id="saveButton" type="button">セーブ</button>
         <button id="loadButton" type="button">ロード</button>
+        <button id="paramsButton" type="button">パラメータ</button>
         <button id="backlogButton" type="button">バックログ</button>
         <button id="chapterButton" type="button">章選択</button>
         <button id="titleButton" type="button">タイトルへ</button>
@@ -68,6 +69,21 @@
         <button id="closeBacklogButton" type="button">閉じる</button>
       </div>
       <div id="backlogList" class="backlog-list"></div>
+    </dialog>
+
+    <dialog id="paramsDialog" class="debug-dialog">
+      <div class="dialog-header">
+        <h2>パラメータ</h2>
+        <button id="closeParamsButton" type="button">閉じる</button>
+      </div>
+      <section class="debug-section">
+        <h3>Route Params</h3>
+        <div id="paramsList" class="debug-list"></div>
+      </section>
+      <section class="debug-section">
+        <h3>Flags</h3>
+        <div id="flagsList" class="debug-list"></div>
+      </section>
     </dialog>
   </main>
 

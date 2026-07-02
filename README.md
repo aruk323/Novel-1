@@ -108,6 +108,41 @@ choices: [
 
 `set` に書いた値はフラグとして保存されます。数値フラグは、すでに数値がある場合は加算されるので好感度にも使えます。
 
+ルート分岐用のパラメータを変化させたい場合は、`params` または `effects` を使います。`params` は数値の加算・減算だけを行い、セーブデータにも保存されます。
+
+```js
+choices: [
+  {
+    text: "リィナの意思を尊重する",
+    params: { affection: 1, free_will_respect: 1, invasion: -1 },
+    next: "respectScene"
+  }
+]
+```
+
+`effects` は、パラメータとフラグをまとめて書けます。`effects` 直下に数値を書いた場合もパラメータとして加算されます。
+
+```js
+choices: [
+  {
+    text: "洗脳なしなら受け入れる",
+    effects: {
+      params: { affection: 1, assimilation: 2 },
+      flags: { has_alienization_flag: true, refused_mind_control: true }
+    },
+    next: "noMindControlScene"
+  },
+  {
+    text: "地球よりリィナを選ぶ",
+    effects: { affection: 1, invasion: 2 },
+    set: { chose_riina_over_earth: true },
+    next: "invasionRouteHint"
+  }
+]
+```
+
+現在のパラメータとフラグは、ゲーム画面のメニューから「パラメータ」を開くと確認できます。
+
 ## 分岐を書く
 
 フラグによって次のシーンを変えたい場合は `branches` を使います。上から順番に判定され、最初に一致した分岐へ進みます。
