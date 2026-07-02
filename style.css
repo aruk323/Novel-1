@@ -206,7 +206,7 @@ h2 { font-size: clamp(1.08rem, 4.8vw, 1.45rem); }
 .choices { display: grid; gap: .45rem; margin-top: .55rem; }
 .choices button { width: 100%; text-align: left; background: rgba(245,158,11,.2); }
 .next-button { width: 100%; margin-top: .58rem; }
-.backlog-dialog {
+.backlog-dialog, .debug-dialog {
   width: min(92vw, 520px);
   max-height: 80svh;
   border: 1px solid rgba(255,255,255,.2);
@@ -214,11 +214,27 @@ h2 { font-size: clamp(1.08rem, 4.8vw, 1.45rem); }
   background: var(--panel-strong);
   color: var(--text);
 }
-.backlog-dialog::backdrop { background: rgba(2,6,23,.72); }
+.backlog-dialog::backdrop, .debug-dialog::backdrop { background: rgba(2,6,23,.72); }
 .dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .backlog-list { display: grid; gap: .75rem; max-height: 58svh; overflow: auto; padding-right: .25rem; }
 .backlog-line { padding-bottom: .75rem; border-bottom: 1px solid rgba(255,255,255,.12); line-height: 1.7; }
 .backlog-line strong { color: #fde68a; }
+.debug-section { margin-top: 1rem; }
+.debug-section h3 { margin: 0 0 .5rem; color: #fde68a; font-size: .9rem; }
+.debug-list { display: grid; gap: .35rem; max-height: 26svh; overflow: auto; padding-right: .25rem; }
+.debug-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .45rem .6rem;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  background: rgba(15,23,42,.58);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .82rem;
+}
+.debug-row strong { color: #a7f3d0; }
 @media (min-width: 700px) { .stage, .screen { min-height: min(100svh, 920px); } .stage { border-radius: 28px; } }
 
 /* Chapter 01 playable build: image-free placeholders for UFO scenes and expression states. */
