@@ -5,8 +5,17 @@ const IMAGE_EXTENSIONS = ["webp", "png", "jpg", "jpeg"];
 const characters = window.NOVEL_CHARACTERS || {};
 const backgrounds = window.NOVEL_BACKGROUNDS || {};
 
+function getChapterIndex() {
+  return window.NOVEL_CHAPTER_INDEX || [];
+}
+
 function getChapters() {
-  return window.NOVEL_CHAPTERS || [];
+  const chapters = window.NOVEL_CHAPTERS || [];
+  const index = getChapterIndex();
+  if (!index.length) return chapters;
+  return index
+    .map((entry) => chapters.find((chapterItem) => chapterItem.id === entry.id))
+    .filter((chapterItem) => chapterItem);
 }
 
 function defaultChapter() {
@@ -146,6 +155,11 @@ function setScene(nextSceneId) {
   save(AUTO_STORAGE_KEY);
 
   const current = scene();
+  if (!current) return;
+  if (current.action === "chapter") {
+    window.setTimeout(() => startChapter(current.chapter), 550);
+    return;
+  }
   if (current.action === "title" || current.action === "chapters") {
     window.setTimeout(() => showScreen(current.action === "title" ? "title" : "chapters"), 550);
   }

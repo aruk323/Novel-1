@@ -330,9 +330,20 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "第1章クリア。銀緑の来訪者との共同生活は、まだ始まったばかりだ。" }
       ],
       choices: [
-        { text: "タイトルへ戻る", set: { chapter01Clear: true }, next: "return_title" },
-        { text: "章選択へ戻る", set: { chapter01Clear: true }, next: "return_chapters" }
+        { text: "第2章へ進む", set: { chapter01Clear: true }, next: "go_chapter02" },
+        { text: "章選択へ戻る", set: { chapter01Clear: true }, next: "return_chapters" },
+        { text: "タイトルへ戻る", set: { chapter01Clear: true }, next: "return_title" }
       ],
+      ending: true
+    },
+    go_chapter02: {
+      label: "第2章へ進みます",
+      background: "earth_dome",
+      lines: [
+        { speaker: "", text: "第2章へ進みます。" }
+      ],
+      action: "chapter",
+      chapter: "chapter02",
       ending: true
     },
     return_title: {
