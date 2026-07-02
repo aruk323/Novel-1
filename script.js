@@ -5,6 +5,16 @@ const IMAGE_EXTENSIONS = ["webp", "png", "jpg", "jpeg"];
 const characters = window.NOVEL_CHARACTERS || {};
 const backgrounds = window.NOVEL_BACKGROUNDS || {};
 
+const DEFAULT_PARAMS = {
+  affection: 0,
+  invasion: 0,
+  dependency: 0,
+  assimilation: 0,
+  wariness: 0,
+  earth_empathy: 0,
+  free_will_respect: 0
+};
+
 function getChapterIndex() {
   return window.NOVEL_CHAPTER_INDEX || [];
 }
@@ -30,6 +40,7 @@ const state = {
   sceneId: initialChapter ? initialChapter.start : "",
   lineIndex: 0,
   flags: {},
+  params: { ...DEFAULT_PARAMS },
   backlog: []
 };
 
@@ -57,12 +68,17 @@ const elements = {
   menuPanel: $("#menuPanel"),
   saveButton: $("#saveButton"),
   loadButton: $("#loadButton"),
+  paramsButton: $("#paramsButton"),
   backlogButton: $("#backlogButton"),
   chapterButton: $("#chapterButton"),
   titleButton: $("#titleButton"),
   backlogDialog: $("#backlogDialog"),
   closeBacklogButton: $("#closeBacklogButton"),
-  backlogList: $("#backlogList")
+  backlogList: $("#backlogList"),
+  paramsDialog: $("#paramsDialog"),
+  closeParamsButton: $("#closeParamsButton"),
+  paramsList: $("#paramsList"),
+  flagsList: $("#flagsList")
 };
 
 function chapter(chapterId = state.chapterId) {
@@ -77,6 +93,14 @@ function scene(sceneId = state.sceneId, chapterId = state.chapterId) {
 
 function isValidSaveData(data) {
   return Boolean(data && data.chapterId && data.sceneId && scene(data.sceneId, data.chapterId));
+}
+
+function createDefaultParams() {
+  return { ...DEFAULT_PARAMS };
+}
+
+function normalizeParams(params = {}) {
+  return { ...createDefaultParams(), ...params };
 }
 
 function characterName(idOrName) {
@@ -122,6 +146,7 @@ function load(key = STORAGE_KEY) {
     sceneId: data.sceneId,
     lineIndex: Math.min(data.lineIndex || 0, scene(data.sceneId, data.chapterId).lines.length - 1),
     flags: data.flags || {},
+    params: normalizeParams(data.params),
     backlog: data.backlog || []
   });
   showScreen("game");
@@ -140,6 +165,7 @@ function startChapter(chapterId) {
     sceneId: selected.start,
     lineIndex: 0,
     flags: {},
+    params: createDefaultParams(),
     backlog: []
   });
   showScreen("game");
@@ -176,6 +202,32 @@ function resolveBranch(current) {
   return matched ? matched.next : current.next;
 }
 
+function applyFlagSet(flags = {}) {
+  Object.entries(flags).forEach(([key, value]) => {
+    state.flags[key] = typeof value === "number" && typeof state.flags[key] === "number"
+      ? state.flags[key] + value
+      : value;
+  });
+}
+
+function applyParamEffects(params = {}) {
+  Object.entries(params).forEach(([key, value]) => {
+    if (typeof value !== "number") return;
+    const currentValue = typeof state.params[key] === "number" ? state.params[key] : 0;
+    state.params[key] = currentValue + value;
+  });
+}
+
+function applyChoiceEffects(effects = {}) {
+  if (effects.params) applyParamEffects(effects.params);
+  if (effects.flags) applyFlagSet(effects.flags);
+
+  const directParamEffects = Object.fromEntries(
+    Object.entries(effects).filter(([key, value]) => key !== "params" && key !== "flags" && typeof value === "number")
+  );
+  applyParamEffects(directParamEffects);
+}
+
 function next() {
   const current = scene();
   if (!current) {
@@ -194,11 +246,9 @@ function next() {
 }
 
 function choose(choice) {
-  Object.entries(choice.set || {}).forEach(([key, value]) => {
-    state.flags[key] = typeof value === "number" && typeof state.flags[key] === "number"
-      ? state.flags[key] + value
-      : value;
-  });
+  applyFlagSet(choice.set || {});
+  applyParamEffects(choice.params || {});
+  applyChoiceEffects(choice.effects || {});
   state.backlog.push({ speaker: "選択", text: choice.text });
   setScene(choice.next);
 }
@@ -343,6 +393,36 @@ function openBacklog() {
   elements.backlogDialog.showModal();
 }
 
+function renderKeyValueList(container, values) {
+  container.innerHTML = "";
+  const entries = Object.entries(values || {});
+  if (!entries.length) {
+    const item = document.createElement("div");
+    item.className = "debug-row";
+    item.textContent = "なし";
+    container.appendChild(item);
+    return;
+  }
+  entries
+    .sort(([left], [right]) => left.localeCompare(right))
+    .forEach(([key, value]) => {
+      const item = document.createElement("div");
+      item.className = "debug-row";
+      const label = document.createElement("span");
+      label.textContent = key;
+      const number = document.createElement("strong");
+      number.textContent = String(value);
+      item.append(label, number);
+      container.appendChild(item);
+    });
+}
+
+function openParamsDebug() {
+  renderKeyValueList(elements.paramsList, state.params);
+  renderKeyValueList(elements.flagsList, state.flags);
+  elements.paramsDialog.showModal();
+}
+
 function closeMenu() {
   elements.menuPanel.classList.add("hidden");
   elements.menuButton.setAttribute("aria-expanded", "false");
@@ -366,10 +446,12 @@ function bindEvents() {
   });
   elements.saveButton.addEventListener("click", () => { save(); alert("セーブしました。"); closeMenu(); });
   elements.loadButton.addEventListener("click", () => { load(); closeMenu(); });
+  elements.paramsButton.addEventListener("click", () => { openParamsDebug(); closeMenu(); });
   elements.backlogButton.addEventListener("click", () => { openBacklog(); closeMenu(); });
   elements.chapterButton.addEventListener("click", () => showScreen("chapters"));
   elements.titleButton.addEventListener("click", () => showScreen("title"));
   elements.closeBacklogButton.addEventListener("click", () => elements.backlogDialog.close());
+  elements.closeParamsButton.addEventListener("click", () => elements.paramsDialog.close());
 }
 
 renderChapterList();
