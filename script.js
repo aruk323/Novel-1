@@ -20,7 +20,7 @@ function getChapters() {
 
 function defaultChapter() {
   const chapters = getChapters();
-  return chapters.find((item) => item.id === "chapter01") || chapters[0] || null;
+  return chapters.find((item) => item.id === "prologue") || chapters.find((item) => item.id === "chapter01") || chapters[0] || null;
 }
 
 const initialChapter = defaultChapter();
