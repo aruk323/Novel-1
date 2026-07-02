@@ -438,9 +438,20 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "第3章クリア。リィナの侵略計画に、初めて地球の日常というノイズが混ざった。" }
       ],
       choices: [
+        { text: "第4章へ進む", set: { chapter03Clear: true }, next: "start_chapter04" },
         { text: "章選択へ戻る", set: { chapter03Clear: true }, next: "return_chapters" },
         { text: "タイトルへ戻る", set: { chapter03Clear: true }, next: "return_title" }
       ],
+      ending: true
+    },
+    start_chapter04: {
+      label: "第4章へ進みます",
+      background: "earth_dome",
+      lines: [
+        { speaker: "", text: "第4章へ進みます。" }
+      ],
+      action: "chapter",
+      chapter: "chapter04",
       ending: true
     },
     return_chapters: {
