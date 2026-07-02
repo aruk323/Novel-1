@@ -47,6 +47,7 @@ const elements = {
   sceneLabel: $("#sceneLabel"),
   background: $("#background"),
   characters: $("#characters"),
+  assetOverlay: $("#assetOverlay"),
   speaker: $("#speaker"),
   text: $("#text"),
   choices: $("#choices"),
@@ -214,23 +215,44 @@ function addCurrentLineToBacklog() {
   }
 }
 
+function assetLabel(kind, value) {
+  return `${kind}: ${value || "なし"}`;
+}
+
+function updateAssetOverlay(backgroundAsset, characterAssets = []) {
+  const assets = [assetLabel("BG", backgroundAsset)];
+  if (characterAssets.length) {
+    assets.push(...characterAssets.map((asset) => assetLabel("CHR", asset)));
+  } else {
+    assets.push(assetLabel("CHR", "なし"));
+  }
+  elements.assetOverlay.replaceChildren(...assets.map((asset) => {
+    const item = document.createElement("span");
+    item.textContent = asset;
+    return item;
+  }));
+}
+
 function setBackground(backgroundId) {
   const background = backgrounds[backgroundId] || { file: backgroundId };
   elements.background.className = `background placeholder-bg ${background && background.theme ? `bg-${background.theme}` : ""}`;
   elements.background.style.backgroundImage = "";
-  if (!background || !background.file) return;
+  if (!background || !background.file) return backgroundId || "なし";
   tryImage(`assets/backgrounds/${background.file}`, (url) => {
     elements.background.classList.remove("placeholder-bg");
     elements.background.style.backgroundImage = `linear-gradient(rgba(2,6,23,.18), rgba(2,6,23,.28)), url('${url}')`;
   });
+  return background.file;
 }
 
 function renderCharacters(sceneCharacters = []) {
   elements.characters.innerHTML = "";
+  const characterAssets = [];
   sceneCharacters.forEach((sceneCharacter) => {
     const profile = characters[sceneCharacter.id] || {};
     const node = document.createElement("div");
     const expression = sceneCharacter.expression || "neutral";
+    characterAssets.push(sceneCharacter.id);
     node.className = `character ${sceneCharacter.position || "center"} expression-${expression}`;
     node.dataset.expression = profile.expressions && profile.expressions[expression] ? profile.expressions[expression] : expression;
     node.textContent = sceneCharacter.name || profile.name || sceneCharacter.id;
@@ -240,6 +262,7 @@ function renderCharacters(sceneCharacters = []) {
     });
     elements.characters.appendChild(node);
   });
+  return characterAssets;
 }
 
 function tryImage(basePath, onFound) {
@@ -286,8 +309,9 @@ function render() {
   }
   elements.chapterTitle.textContent = currentChapter.title;
   elements.sceneLabel.textContent = current.label || state.sceneId;
-  setBackground(current.background);
-  renderCharacters(current.characters || []);
+  const backgroundAsset = setBackground(current.background);
+  const characterAssets = renderCharacters(current.characters || []);
+  updateAssetOverlay(backgroundAsset, characterAssets);
   renderLine();
 }
 
