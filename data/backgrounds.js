@@ -46,5 +46,41 @@ window.NOVEL_BACKGROUNDS = {
     name: "地球観測ドーム",
     file: "earth-observation-dome",
     theme: "earth"
+  },
+  convenience_store: {
+    id: "convenience_store",
+    name: "夜のコンビニ",
+    file: "earth-convenience-store",
+    theme: "food"
+  },
+  school_gate: {
+    id: "school_gate",
+    name: "学校の校門",
+    file: "earth-school-gate",
+    theme: "earth"
+  },
+  shopping_street: {
+    id: "shopping_street",
+    name: "商店街",
+    file: "earth-shopping-street",
+    theme: "earth"
+  },
+  cafe: {
+    id: "cafe",
+    name: "カフェ",
+    file: "earth-cafe",
+    theme: "food"
+  },
+  arcade: {
+    id: "arcade",
+    name: "ゲームセンター",
+    file: "earth-arcade",
+    theme: "lab"
+  },
+  park_night: {
+    id: "park_night",
+    name: "夜の公園",
+    file: "earth-park-night",
+    theme: "earth"
   }
 };

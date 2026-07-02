@@ -433,6 +433,8 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "地球は非効率で、騒がしく、脆弱で、理解不能。" },
         { speaker: "", text: "緑の発光ラインが、いつもよりゆっくり明滅する。" },
         { speaker: "liina", text: "でも、消すには惜しい。" },
+        { speaker: "", text: "その瞬間、閉じかけていた侵略計画フォルダが自動で開いた。" },
+        { speaker: "", text: "母星からの未読命令。件名は『侵略計画、詳細報告を要求』。" },
         { speaker: "", text: "第3章クリア。リィナの侵略計画に、初めて地球の日常というノイズが混ざった。" }
       ],
       choices: [
