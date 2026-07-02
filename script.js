@@ -5,8 +5,17 @@ const IMAGE_EXTENSIONS = ["webp", "png", "jpg", "jpeg"];
 const characters = window.NOVEL_CHARACTERS || {};
 const backgrounds = window.NOVEL_BACKGROUNDS || {};
 
+function getChapterIndex() {
+  return window.NOVEL_CHAPTER_INDEX || [];
+}
+
 function getChapters() {
-  return window.NOVEL_CHAPTERS || [];
+  const chapters = window.NOVEL_CHAPTERS || [];
+  const index = getChapterIndex();
+  if (!index.length) return chapters;
+  return index
+    .map((entry) => chapters.find((chapterItem) => chapterItem.id === entry.id))
+    .filter((chapterItem) => chapterItem);
 }
 
 function defaultChapter() {
@@ -14,9 +23,11 @@ function defaultChapter() {
   return chapters.find((item) => item.id === "chapter01") || chapters[0] || null;
 }
 
+const initialChapter = defaultChapter();
+
 const state = {
-  chapterId: defaultChapter()?.id || "",
-  sceneId: defaultChapter()?.start || "",
+  chapterId: initialChapter ? initialChapter.id : "",
+  sceneId: initialChapter ? initialChapter.start : "",
   lineIndex: 0,
   flags: {},
   backlog: []
@@ -60,16 +71,16 @@ function chapter(chapterId = state.chapterId) {
 
 function scene(sceneId = state.sceneId, chapterId = state.chapterId) {
   const currentChapter = chapter(chapterId);
-  return currentChapter?.scenes?.[sceneId] || null;
+  return currentChapter && currentChapter.scenes ? currentChapter.scenes[sceneId] || null : null;
 }
 
 function isValidSaveData(data) {
-  return Boolean(data?.chapterId && data?.sceneId && scene(data.sceneId, data.chapterId));
+  return Boolean(data && data.chapterId && data.sceneId && scene(data.sceneId, data.chapterId));
 }
 
 function characterName(idOrName) {
   if (!idOrName) return "地の文";
-  return characters[idOrName]?.name || idOrName;
+  return characters[idOrName] && characters[idOrName].name ? characters[idOrName].name : idOrName;
 }
 
 function showScreen(name) {
@@ -144,6 +155,11 @@ function setScene(nextSceneId) {
   save(AUTO_STORAGE_KEY);
 
   const current = scene();
+  if (!current) return;
+  if (current.action === "chapter") {
+    window.setTimeout(() => startChapter(current.chapter), 550);
+    return;
+  }
   if (current.action === "title" || current.action === "chapters") {
     window.setTimeout(() => showScreen(current.action === "title" ? "title" : "chapters"), 550);
   }
@@ -200,9 +216,9 @@ function addCurrentLineToBacklog() {
 
 function setBackground(backgroundId) {
   const background = backgrounds[backgroundId] || { file: backgroundId };
-  elements.background.className = `background placeholder-bg ${background?.theme ? `bg-${background.theme}` : ""}`;
+  elements.background.className = `background placeholder-bg ${background && background.theme ? `bg-${background.theme}` : ""}`;
   elements.background.style.backgroundImage = "";
-  if (!background?.file) return;
+  if (!background || !background.file) return;
   tryImage(`assets/backgrounds/${background.file}`, (url) => {
     elements.background.classList.remove("placeholder-bg");
     elements.background.style.backgroundImage = `linear-gradient(rgba(2,6,23,.18), rgba(2,6,23,.28)), url('${url}')`;
@@ -216,7 +232,7 @@ function renderCharacters(sceneCharacters = []) {
     const node = document.createElement("div");
     const expression = sceneCharacter.expression || "neutral";
     node.className = `character ${sceneCharacter.position || "center"} expression-${expression}`;
-    node.dataset.expression = profile.expressions?.[expression] || expression;
+    node.dataset.expression = profile.expressions && profile.expressions[expression] ? profile.expressions[expression] : expression;
     node.textContent = sceneCharacter.name || profile.name || sceneCharacter.id;
     tryImage(`assets/characters/${sceneCharacter.id}`, (url) => {
       node.classList.add("has-image");
@@ -244,7 +260,7 @@ function renderLine() {
   elements.choices.innerHTML = "";
 
   const isLastLine = state.lineIndex === current.lines.length - 1;
-  const canChoose = isLastLine && current.choices?.length;
+  const canChoose = isLastLine && current.choices && current.choices.length;
   const isTerminalLine = isLastLine && current.ending && !canChoose;
   elements.nextButton.classList.toggle("hidden", Boolean(canChoose || isTerminalLine));
   elements.nextButton.textContent = isTerminalLine ? "終了" : "次へ";
@@ -309,7 +325,10 @@ function closeMenu() {
 }
 
 function bindEvents() {
-  elements.startButton.addEventListener("click", () => startChapter(defaultChapter()?.id));
+  elements.startButton.addEventListener("click", () => {
+    const selected = defaultChapter();
+    startChapter(selected ? selected.id : undefined);
+  });
   elements.continueButton.addEventListener("click", () => load());
   elements.chapterSelectButton.addEventListener("click", () => showScreen("chapters"));
   elements.chapterBackButton.addEventListener("click", () => showScreen("title"));
