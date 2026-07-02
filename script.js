@@ -45,6 +45,12 @@ const state = {
 };
 
 const $ = (selector) => document.querySelector(selector);
+
+function on(element, eventName, handler) {
+  if (!element) return;
+  element.addEventListener(eventName, handler);
+}
+
 const elements = {
   titleScreen: $("#titleScreen"),
   chapterScreen: $("#chapterScreen"),
@@ -394,6 +400,7 @@ function openBacklog() {
 }
 
 function renderKeyValueList(container, values) {
+  if (!container) return;
   container.innerHTML = "";
   const entries = Object.entries(values || {});
   if (!entries.length) {
@@ -420,38 +427,43 @@ function renderKeyValueList(container, values) {
 function openParamsDebug() {
   renderKeyValueList(elements.paramsList, state.params);
   renderKeyValueList(elements.flagsList, state.flags);
+  if (!elements.paramsDialog || typeof elements.paramsDialog.showModal !== "function") {
+    alert(`params: ${JSON.stringify(state.params)}\nflags: ${JSON.stringify(state.flags)}`);
+    return;
+  }
   elements.paramsDialog.showModal();
 }
 
 function closeMenu() {
+  if (!elements.menuPanel || !elements.menuButton) return;
   elements.menuPanel.classList.add("hidden");
   elements.menuButton.setAttribute("aria-expanded", "false");
 }
 
 function bindEvents() {
-  elements.startButton.addEventListener("click", () => {
+  on(elements.startButton, "click", () => {
     const selected = defaultChapter();
     startChapter(selected ? selected.id : undefined);
   });
-  elements.continueButton.addEventListener("click", () => load());
-  elements.chapterSelectButton.addEventListener("click", () => showScreen("chapters"));
-  elements.chapterBackButton.addEventListener("click", () => showScreen("title"));
-  elements.nextButton.addEventListener("click", next);
-  elements.messageBox.addEventListener("click", (event) => {
+  on(elements.continueButton, "click", () => load());
+  on(elements.chapterSelectButton, "click", () => showScreen("chapters"));
+  on(elements.chapterBackButton, "click", () => showScreen("title"));
+  on(elements.nextButton, "click", next);
+  on(elements.messageBox, "click", (event) => {
     if (!event.target.closest("button") && !elements.nextButton.classList.contains("hidden")) next();
   });
-  elements.menuButton.addEventListener("click", () => {
+  on(elements.menuButton, "click", () => {
     const hidden = elements.menuPanel.classList.toggle("hidden");
     elements.menuButton.setAttribute("aria-expanded", String(!hidden));
   });
-  elements.saveButton.addEventListener("click", () => { save(); alert("セーブしました。"); closeMenu(); });
-  elements.loadButton.addEventListener("click", () => { load(); closeMenu(); });
-  elements.paramsButton.addEventListener("click", () => { openParamsDebug(); closeMenu(); });
-  elements.backlogButton.addEventListener("click", () => { openBacklog(); closeMenu(); });
-  elements.chapterButton.addEventListener("click", () => showScreen("chapters"));
-  elements.titleButton.addEventListener("click", () => showScreen("title"));
-  elements.closeBacklogButton.addEventListener("click", () => elements.backlogDialog.close());
-  elements.closeParamsButton.addEventListener("click", () => elements.paramsDialog.close());
+  on(elements.saveButton, "click", () => { save(); alert("セーブしました。"); closeMenu(); });
+  on(elements.loadButton, "click", () => { load(); closeMenu(); });
+  on(elements.paramsButton, "click", () => { openParamsDebug(); closeMenu(); });
+  on(elements.backlogButton, "click", () => { openBacklog(); closeMenu(); });
+  on(elements.chapterButton, "click", () => showScreen("chapters"));
+  on(elements.titleButton, "click", () => showScreen("title"));
+  on(elements.closeBacklogButton, "click", () => elements.backlogDialog.close());
+  on(elements.closeParamsButton, "click", () => elements.paramsDialog.close());
 }
 
 renderChapterList();
