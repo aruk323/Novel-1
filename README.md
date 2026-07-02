@@ -13,7 +13,22 @@
 - キャラクター名表示、選択肢、フラグ分岐
 - セーブ / ロード / オートセーブ
 - バックログ
+- プロローグから第1章へ進む短い導入版
 - 最後まで遊べる第1章サンプル
+
+## 章構成
+
+現在のプレイ版は、以下の順番で進みます。
+
+1. `data/chapters/prologue.js`：プロローグ「銀緑の夜」
+   - 平凡な夜、主人公が銀緑の光に攫われ、リィナと初対面します。
+   - 終了後は自動で第1章へ進みます。
+2. `data/chapters/chapter01.js`：第1章「銀緑の来訪者」
+   - UFOで目覚めた主人公が、リィナとの観察生活を始めます。
+3. `data/chapters/chapter02.js`：第2章
+   - 第1章後の展開を扱います。
+
+タイトル画面の「はじめから」はプロローグから開始します。章選択画面ではプロローグ、第1章、第2章を選べます。画像素材が未配置でも、仮背景・仮立ち絵でプレイできます。
 
 ## GitHub Pagesで公開する方法
 
@@ -31,7 +46,9 @@ style.css                  # スマホ縦画面向けデザイン
 script.js                  # ノベルゲームエンジン本体
 data/characters.js         # キャラクター管理
 data/backgrounds.js        # 背景管理
-data/chapters/chapter1.js  # 第1章サンプル
+data/chapters/prologue.js # プロローグ
+data/chapters/chapter01.js # 第1章本編
+data/chapters/chapter02.js # 第2章
 assets/characters/         # 立ち絵画像を入れる場所
 assets/backgrounds/        # 背景画像を入れる場所
 assets/bgm/                # BGMを入れる場所
@@ -49,7 +66,7 @@ docs/                      # 長編制作メモ用テンプレート
 
 ## 第1章を編集する
 
-第1章の本文は `data/chapters/chapter1.js` にあります。
+第1章の本文は `data/chapters/chapter01.js` にあります。
 
 ```js
 lines: [
@@ -105,13 +122,15 @@ next: "badEnding"
 
 ## 章を追加する
 
-1. `data/chapters/chapter2.js` を作ります。
-2. `data/chapters/chapter1.js` をコピーして、`id`、`title`、`summary`、`scenes` を書き換えます。
-3. `index.html` の下部に読み込みを追加します。
+1. `data/chapters/chapter03.js` のように新しい章ファイルを作ります。
+2. `data/chapters/chapter01.js` を参考に、`id`、`title`、`summary`、`scenes` を書き換えます。
+3. `data/chapters/chapterIndex.js` に章IDとファイルパスを追加します。
+4. `index.html` の下部に読み込みを追加します。
 
 ```html
-<script src="data/chapters/chapter1.js"></script>
-<script src="data/chapters/chapter2.js"></script>
+<script src="data/chapters/prologue.js"></script>
+<script src="data/chapters/chapter01.js"></script>
+<script src="data/chapters/chapter02.js"></script>
 <script src="script.js"></script>
 ```
 
