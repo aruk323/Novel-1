@@ -332,9 +332,20 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "次は、リィナが本物の地球文化を調べる番だ。\nコンビニの光、学校のざわめき、夜の街。UFOの外にある日常が、二人を待っている。" }
       ],
       choices: [
+        { text: "第3章へ進む", set: { chapter02Clear: true }, next: "go_chapter03" },
         { text: "章選択へ戻る", set: { chapter02Clear: true }, next: "return_chapters" },
         { text: "タイトルへ戻る", set: { chapter02Clear: true }, next: "return_title" }
       ],
+      ending: true
+    },
+    go_chapter03: {
+      label: "第3章へ進みます",
+      background: "earth_dome",
+      lines: [
+        { speaker: "", text: "第3章へ進みます。" }
+      ],
+      action: "chapter",
+      chapter: "chapter03",
       ending: true
     },
     return_chapters: {
