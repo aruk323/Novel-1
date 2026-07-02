@@ -53,13 +53,70 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "反発を確認。予測済み。でも、胸部圧迫が強い。原因不明。" }
       ],
       choices: [
-        { text: "地球を傷つけないでほしいと言う", set: { freeWill: 1, affection: 1, invasionResistance: 1 }, next: "distance_protocol" },
-        { text: "リィナ自身はどうしたいのか聞く", set: { trust: 1, freeWill: 1 }, next: "distance_protocol" },
-        { text: "侵略計画の詳細をもっと知る", set: { curiosity: 1, invasionKnowledge: 1 }, next: "distance_protocol" },
-        { text: "リィナの命令なら従うのか尋ねる", set: { caution: 1, commandDoubt: 1 }, next: "distance_protocol" }
+        { text: "地球を傷つけないでほしいと言う", set: { freeWill: 1, affection: 1, invasionResistance: 1 }, next: "reaction_spare_earth" },
+        { text: "リィナ自身はどうしたいのか聞く", set: { trust: 1, freeWill: 1 }, next: "reaction_ask_will" },
+        { text: "侵略計画の詳細をもっと知る", set: { curiosity: 1, invasionKnowledge: 1 }, next: "reaction_plan_detail" },
+        { text: "リィナの命令なら従うのか尋ねる", set: { caution: 1, commandDoubt: 1 }, next: "reaction_command_doubt" }
       ]
     },
 
+
+
+    // 選択肢リアクション：地球保護を求める。
+    // 目的：地球の日常を守りたい主人公の言葉に、リィナが揺れる反応を返す。
+    reaction_spare_earth: {
+      label: "反発：地球を守る言葉",
+      background: "earth_dome",
+      characters: [{ id: "liina", position: "center", expression: "flustered" }],
+      lines: [
+        { speaker: "protagonist", text: "地球を傷つけないでほしい。リィナが見た街も、公園も、誰かの日常なんだ。" },
+        { speaker: "liina", text: "君の日常も含まれる。理解している。だから演算が遅い。" },
+        { speaker: "", text: "リィナは地球から視線をそらした。\nアンテナの先が、細かく震えている。" }
+      ],
+      next: "distance_protocol"
+    },
+
+    // 選択肢リアクション：リィナ自身の意思を問う。
+    // 目的：命令と本人の意思を分ける問いを置き、自由意志テーマを強める。
+    reaction_ask_will: {
+      label: "反発：意思を問う",
+      background: "earth_dome",
+      characters: [{ id: "liina", position: "center", expression: "curious" }],
+      lines: [
+        { speaker: "protagonist", text: "命令じゃなくて、リィナ自身はどうしたいの？" },
+        { speaker: "liina", text: "私自身。定義が曖昧。任務遂行個体に不要な概念。" },
+        { speaker: "", text: "そう言いながら、リィナは答えを探すみたいに黙った。" }
+      ],
+      next: "distance_protocol"
+    },
+
+    // 選択肢リアクション：侵略計画を知る。
+    // 目的：好奇心と抵抗準備の両方として、計画詳細を見ようとする反応を返す。
+    reaction_plan_detail: {
+      label: "反発：詳細確認",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "cool" }],
+      lines: [
+        { speaker: "protagonist", text: "計画を知りたい。止めるにしても、知らないままじゃ動けない。" },
+        { speaker: "liina", text: "合理的。君は抵抗対象として優秀。少し困る。" },
+        { speaker: "", text: "侵略シミュレーションの光が、街の上に静かに降りていく。" }
+      ],
+      next: "distance_protocol"
+    },
+
+    // 選択肢リアクション：命令への疑問。
+    // 目的：母星命令に従う個体としてのリィナの危うさを早めに示す。
+    reaction_command_doubt: {
+      label: "反発：命令への疑問",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "neutral" }],
+      lines: [
+        { speaker: "protagonist", text: "母星の命令なら、リィナは何でも従うの？" },
+        { speaker: "liina", text: "基本的には肯定。私は先遣調査員として設計されている。" },
+        { speaker: "", text: "少し間が空いた。\nその沈黙だけが、完全な肯定ではないと告げていた。" }
+      ],
+      next: "distance_protocol"
+    },
     // シーン4：距離を置く。
     // 目的：反発後に主人公とリィナの距離を作り、リィナの不調を「観察不足」と言い訳させる。
     distance_protocol: {
@@ -94,12 +151,55 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "機密情報。君の閲覧権限はない。あと、見ないで。" }
       ],
       choices: [
-        { text: "愛着形成をからかう", set: { affection: 1, dependence: 1 }, next: "diagnosis_after" },
-        { text: "無理に消さなくていいと言う", set: { trust: 1, freeWill: 1 }, next: "diagnosis_after" },
-        { text: "診断ログを詳しく読む", set: { curiosity: 1, emotionKnowledge: 1 }, next: "diagnosis_after" }
+        { text: "愛着形成をからかう", set: { affection: 1, dependence: 1 }, next: "diagnosis_tease" },
+        { text: "無理に消さなくていいと言う", set: { trust: 1, freeWill: 1 }, next: "diagnosis_keep" },
+        { text: "診断ログを詳しく読む", set: { curiosity: 1, emotionKnowledge: 1 }, next: "diagnosis_read" }
       ]
     },
 
+
+
+    // 選択肢リアクション：愛着形成をからかう。
+    // 目的：ラブコメのズレを出しつつ、リィナが感情を否認する口調を維持する。
+    diagnosis_tease: {
+      label: "診断反応：からかう",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "flustered" }],
+      lines: [
+        { speaker: "protagonist", text: "愛着形成って、リィナが自分で思ってるより分かりやすいね。" },
+        { speaker: "liina", text: "分かりやすくない。君の解析精度が異常。" },
+        { speaker: "", text: "アンテナの先が、抗議するみたいに二度光った。" }
+      ],
+      next: "diagnosis_after"
+    },
+
+    // 選択肢リアクション：消さなくていいと言う。
+    // 目的：感情ログを保存する理由を主人公が与え、リィナの削除を止める。
+    diagnosis_keep: {
+      label: "診断反応：保存",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "curious" }],
+      lines: [
+        { speaker: "protagonist", text: "無理に消さなくていい。分からないなら、残して考えればいい。" },
+        { speaker: "liina", text: "保留は非効率。でも、君の提案は破棄しにくい。" },
+        { speaker: "", text: "削除確認の警告が、音もなく閉じられた。" }
+      ],
+      next: "diagnosis_after"
+    },
+
+    // 選択肢リアクション：診断ログを読む。
+    // 目的：主人公が情報を得る代わりに、リィナの羞恥に近い反応を引き出す。
+    diagnosis_read: {
+      label: "診断反応：ログ閲覧",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "cool" }],
+      lines: [
+        { speaker: "protagonist", text: "このログ、接触時間の増加って書いてある。" },
+        { speaker: "liina", text: "観察精度向上のため。個人的理由ではない。" },
+        { speaker: "", text: "画面を閉じる速度だけは、明らかに個人的だった。" }
+      ],
+      next: "diagnosis_after"
+    },
     // シーン6：診断後の余波。
     // 目的：選択後の反応を短く入れ、リィナが感情を直接認めないまま揺れる様子を見せる。
     diagnosis_after: {
@@ -147,13 +247,70 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "protagonist", text: "それでも、何も言わないよりはいい。" }
       ],
       choices: [
-        { text: "自分の意思は奪わせない", set: { brainwashReject: 1, freeWill: 1 }, next: "command_after" },
-        { text: "リィナを感情汚染なんて呼ばせない", set: { affection: 1, trust: 1 }, next: "command_after" },
-        { text: "同族化について条件を聞く", set: { curiosity: 1, assimilationInterest: 1 }, next: "command_after" },
-        { text: "リィナの判断を信じる", set: { trust: 1, dependence: 1 }, next: "command_after" }
+        { text: "自分の意思は奪わせない", set: { brainwashReject: 1, freeWill: 1 }, next: "command_reject_brainwash" },
+        { text: "リィナを感情汚染なんて呼ばせない", set: { affection: 1, trust: 1 }, next: "command_defend_liina" },
+        { text: "同族化について条件を聞く", set: { curiosity: 1, assimilationInterest: 1 }, next: "command_ask_assimilation" },
+        { text: "リィナの判断を信じる", set: { trust: 1, dependence: 1 }, next: "command_trust_liina" }
       ]
     },
 
+
+
+    // 選択肢リアクション：洗脳拒否。
+    // 目的：自由意志を守る立場を明確にし、第5章の洗脳拒否フラグへつなぐ。
+    command_reject_brainwash: {
+      label: "命令反応：洗脳拒否",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "cool" }],
+      lines: [
+        { speaker: "protagonist", text: "自分の意思は奪わせない。リィナにも、母星にも。" },
+        { speaker: "liina", text: "自由意思の保持要求を記録。君らしい反応。" },
+        { speaker: "", text: "リィナの声は淡々としていた。\nけれど、少しだけ安心したようにも聞こえた。" }
+      ],
+      next: "command_after"
+    },
+
+    // 選択肢リアクション：リィナを守る。
+    // 目的：主人公の好意と信頼を出し、リィナの感情ログをさらに揺らす。
+    command_defend_liina: {
+      label: "命令反応：リィナを守る",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "flustered" }],
+      lines: [
+        { speaker: "protagonist", text: "リィナを感情汚染なんて呼ばせない。君は壊れてるわけじゃない。" },
+        { speaker: "liina", text: "壊れていない。たぶん。君がそう言うなら、再検査する。" },
+        { speaker: "", text: "発光ラインが、通信紋章よりもやわらかく光った。" }
+      ],
+      next: "command_after"
+    },
+
+    // 選択肢リアクション：同族化条件を聞く。
+    // 目的：同族化への興味を危うい魅力として置き、第5章の装置提示を自然につなぐ。
+    command_ask_assimilation: {
+      label: "命令反応：同族化条件",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "curious" }],
+      lines: [
+        { speaker: "protagonist", text: "同族化って、具体的には何を変えるの？　意思まで変わる？" },
+        { speaker: "liina", text: "肉体適応、通信器官付与、命令受容性の調整。最後は危険項目。" },
+        { speaker: "", text: "危険、とリィナ自身が言った。\nそれだけで、装置の怖さは十分だった。" }
+      ],
+      next: "command_after"
+    },
+
+    // 選択肢リアクション：リィナを信じる。
+    // 目的：信頼の甘さと依存の危うさを同時に示す。
+    command_trust_liina: {
+      label: "命令反応：信じる",
+      background: "research_room",
+      characters: [{ id: "liina", position: "center", expression: "neutral" }],
+      lines: [
+        { speaker: "protagonist", text: "リィナの判断を信じる。だから、リィナ自身で選んで。" },
+        { speaker: "liina", text: "信頼は重い。だが、不快ではない。演算負荷は高い。" },
+        { speaker: "", text: "リィナは胸元の発光ラインに、そっと指を当てた。" }
+      ],
+      next: "command_after"
+    },
     // シーン9：命令後の沈黙。
     // 目的：リィナが命令に逆らいきれない危うさと、それでも即時実行しない選択を見せる。
     command_after: {
@@ -209,13 +366,70 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "君は、私が地球を侵略したら、私を嫌う？" }
       ],
       choices: [
-        { text: "嫌いになる前に止める", set: { freeWill: 1, invasionResistance: 1 }, next: "chapter_clear" },
-        { text: "リィナが選ぶまで隣にいる", set: { affection: 1, trust: 1 }, next: "chapter_clear" },
-        { text: "洗脳や支配なら拒む", set: { brainwashReject: 1, caution: 1 }, next: "chapter_clear" },
-        { text: "同族化でも自由意思は残してほしい", set: { assimilationInterest: 1, freeWill: 1 }, next: "chapter_clear" }
+        { text: "嫌いになる前に止める", set: { freeWill: 1, invasionResistance: 1 }, next: "final_stop_before_hate" },
+        { text: "リィナが選ぶまで隣にいる", set: { affection: 1, trust: 1 }, next: "final_stay_until_choice" },
+        { text: "洗脳や支配なら拒む", set: { brainwashReject: 1, caution: 1 }, next: "final_reject_control" },
+        { text: "同族化でも自由意思は残してほしい", set: { assimilationInterest: 1, freeWill: 1 }, next: "final_free_assimilation" }
       ]
     },
 
+
+
+    // 選択肢リアクション：嫌う前に止める。
+    // 目的：地球を守るルート寄りの返答として、対立してでも止める決意を示す。
+    final_stop_before_hate: {
+      label: "返答：止める",
+      background: "park_night",
+      characters: [{ id: "liina", position: "center", expression: "cool" }],
+      lines: [
+        { speaker: "protagonist", text: "嫌いになる前に止める。リィナが本当に戻れなくなる前に。" },
+        { speaker: "liina", text: "敵対予告を確認。でも、君の声は敵のものではない。" },
+        { speaker: "", text: "夢の公園に、冷たい風が吹いた。" }
+      ],
+      next: "chapter_clear"
+    },
+
+    // 選択肢リアクション：隣にいる。
+    // 目的：好意と信頼のルート寄りに、リィナの自己選択を待つ姿勢を示す。
+    final_stay_until_choice: {
+      label: "返答：隣にいる",
+      background: "park_night",
+      characters: [{ id: "liina", position: "center", expression: "flustered" }],
+      lines: [
+        { speaker: "protagonist", text: "リィナが自分で選ぶまで、隣にいる。命令じゃない答えを聞きたい。" },
+        { speaker: "liina", text: "隣。距離が近い。だが、今は離れろと言えない。" },
+        { speaker: "", text: "アンテナの光が、夜の公園で小さく揺れた。" }
+      ],
+      next: "chapter_clear"
+    },
+
+    // 選択肢リアクション：支配拒否。
+    // 目的：洗脳・支配への拒否を明確にし、愛と支配の境界を確認する。
+    final_reject_control: {
+      label: "返答：支配拒否",
+      background: "park_night",
+      characters: [{ id: "liina", position: "center", expression: "neutral" }],
+      lines: [
+        { speaker: "protagonist", text: "洗脳や支配なら拒む。リィナのことを嫌いになりたくないから。" },
+        { speaker: "liina", text: "拒否条件を記録。君の意思を残す方法を、優先検索する。" },
+        { speaker: "", text: "その言葉は、侵略者の宣言ではなく約束に近かった。" }
+      ],
+      next: "chapter_clear"
+    },
+
+    // 選択肢リアクション：自由意思つき同族化。
+    // 目的：同族化への興味を示しつつ、洗脳なしという条件を第5章へ渡す。
+    final_free_assimilation: {
+      label: "返答：自由意思つき同族化",
+      background: "park_night",
+      characters: [{ id: "liina", position: "center", expression: "curious" }],
+      lines: [
+        { speaker: "protagonist", text: "同族化でも、自由意思は残してほしい。リィナと同じになるなら、自分のままでいたい。" },
+        { speaker: "liina", text: "矛盾した要求。でも、重要。洗脳なしの同族化可能性を再計算する。" },
+        { speaker: "", text: "リィナの瞳に、研究者の光と、別の何かが同時に宿った。" }
+      ],
+      next: "chapter_clear"
+    },
     // シーン12：第4章の締め。
     // 目的：第5章の同族化実験と侵略前倒しへ接続しつつ、既存の章選択・タイトル導線を保つ。
     chapter_clear: {
