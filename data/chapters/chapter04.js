@@ -446,9 +446,7 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "第4章クリア。リィナの恋愛感情は、まだ本人の中でバグの名前をしていた。" }
       ],
       choices: [
-        { text: "第5章へ進む", set: { chapter04Clear: true }, next: "start_chapter05" },
-        { text: "章選択へ戻る", set: { chapter04Clear: true }, next: "return_chapters" },
-        { text: "タイトルへ戻る", set: { chapter04Clear: true }, next: "return_title" }
+        { text: "第5章へ進む", set: { chapter04Clear: true }, next: "start_chapter05" }
       ],
       ending: true
     },

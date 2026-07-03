@@ -15,6 +15,19 @@ const DEFAULT_PARAMS = {
   free_will_respect: 0
 };
 
+const CHAPTER06_ROUTE_THRESHOLDS = {
+  highAffection: 18,
+  veryHighAffection: 30,
+  highDependency: 4,
+  highAssimilation: 3,
+  highInvasion: 2,
+  mediumInvasionMin: 0,
+  mediumInvasionMax: 1,
+  mediumDependencyMax: 3,
+  highEarthEmpathy: 8,
+  highFreeWillRespect: 10
+};
+
 function getChapterIndex() {
   return window.NOVEL_CHAPTER_INDEX || [];
 }
@@ -24,7 +37,10 @@ function getChapters() {
   const index = getChapterIndex();
   if (!index.length) return chapters;
   return index
-    .map((entry) => chapters.find((chapterItem) => chapterItem.id === entry.id))
+    .map((entry) => {
+      const chapterItem = chapters.find((item) => item.id === entry.id);
+      return chapterItem ? { ...chapterItem, ...entry } : null;
+    })
     .filter((chapterItem) => chapterItem);
 }
 
@@ -160,19 +176,20 @@ function load(key = STORAGE_KEY) {
   return true;
 }
 
-function startChapter(chapterId) {
+function startChapter(chapterId, options = {}) {
   const selected = chapter(chapterId);
   if (!selected) {
     alert("章データを読み込めませんでした。ページを再読み込みしてください。");
     return;
   }
+  const preserveProgress = options.preserveProgress === true;
   Object.assign(state, {
     chapterId: selected.id,
     sceneId: selected.start,
     lineIndex: 0,
-    flags: {},
-    params: createDefaultParams(),
-    backlog: []
+    flags: preserveProgress ? state.flags : {},
+    params: preserveProgress ? state.params : createDefaultParams(),
+    backlog: preserveProgress ? state.backlog : []
   });
   showScreen("game");
   render();
@@ -190,7 +207,11 @@ function setScene(nextSceneId) {
   const current = scene();
   if (!current) return;
   if (current.action === "chapter") {
-    window.setTimeout(() => startChapter(current.chapter), 550);
+    window.setTimeout(() => startChapter(current.chapter, { preserveProgress: true }), 550);
+    return;
+  }
+  if (current.action === "chapter06Route") {
+    window.setTimeout(() => startChapter(resolveChapter06Route(), { preserveProgress: true }), 550);
     return;
   }
   if (current.action === "title" || current.action === "chapters") {
@@ -206,6 +227,42 @@ function resolveBranch(current) {
   if (!current.branches) return current.next;
   const matched = current.branches.find((branch) => matchesFlagRule(branch.if || {}));
   return matched ? matched.next : current.next;
+}
+
+function resolveChapter06Route() {
+  const params = normalizeParams(state.params);
+  const flags = state.flags || {};
+  const thresholds = CHAPTER06_ROUTE_THRESHOLDS;
+  const affection = params.affection || 0;
+  const invasion = params.invasion || 0;
+  const dependency = params.dependency || 0;
+  const assimilation = params.assimilation || 0;
+  const earthEmpathy = params.earth_empathy || 0;
+  const freeWillRespect = params.free_will_respect || 0;
+
+  const isChapter06D = affection >= thresholds.highAffection
+    && dependency >= thresholds.highDependency;
+  if (isChapter06D) return "chapter06D";
+
+  const isChapter06A = affection >= thresholds.veryHighAffection
+    && invasion <= thresholds.mediumInvasionMin
+    && (freeWillRespect >= thresholds.highFreeWillRespect || flags.respected_riina_free_will === true);
+  if (isChapter06A) return "chapter06A";
+
+  const isChapter06B = affection >= thresholds.highAffection
+    && invasion >= thresholds.highInvasion
+    && assimilation >= thresholds.highAssimilation
+    && flags.has_alienization_flag === true;
+  if (isChapter06B) return "chapter06B";
+
+  const isChapter06E = affection >= thresholds.highAffection
+    && invasion >= thresholds.mediumInvasionMin
+    && invasion <= thresholds.mediumInvasionMax
+    && dependency <= thresholds.mediumDependencyMax
+    && (earthEmpathy >= thresholds.highEarthEmpathy || flags.has_earthling_path_flag === true);
+  if (isChapter06E) return "chapter06E";
+
+  return "chapter06C";
 }
 
 function applyFlagSet(flags = {}) {
@@ -378,7 +435,8 @@ function renderChapterList() {
     elements.chapterList.textContent = "章データを読み込めませんでした。ページを再読み込みしてください。";
     return;
   }
-  chapters.forEach((item) => {
+  const chapter06Routes = chapters.filter((item) => item.group === "chapter06");
+  chapters.filter((item) => item.group !== "chapter06").forEach((item) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "chapter-item";
@@ -386,6 +444,22 @@ function renderChapterList() {
     button.addEventListener("click", () => startChapter(item.id));
     elements.chapterList.appendChild(button);
   });
+  if (chapter06Routes.length) {
+    const group = document.createElement("details");
+    group.className = "chapter-group";
+    const summary = document.createElement("summary");
+    summary.textContent = "第6章：分岐する銀緑の未来";
+    group.appendChild(summary);
+    chapter06Routes.forEach((item) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "chapter-item";
+      button.innerHTML = `${item.title}<small>${item.summary || ""}</small>`;
+      button.addEventListener("click", () => startChapter(item.id));
+      group.appendChild(button);
+    });
+    elements.chapterList.appendChild(group);
+  }
 }
 
 function openBacklog() {
