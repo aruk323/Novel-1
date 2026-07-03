@@ -16,17 +16,13 @@ const DEFAULT_PARAMS = {
 };
 
 const CHAPTER06_ROUTE_THRESHOLDS = {
-  highAffection: 18,
-  veryHighAffection: 30,
-  highDependency: 4,
-  highAssimilation: 3,
-  highInvasion: 2,
-  mediumInvasionMin: 0,
-  mediumInvasionMax: 1,
-  mediumDependencyMax: 3,
-  highEarthEmpathy: 8,
-  highFreeWillRespect: 10
+  chapter06A: { affection: 50, invasion: 0, freeWillRespect: 20 },
+  chapter06B: { affection: 30, invasion: 2, assimilation: 3 },
+  chapter06D: { affection: 40, dependency: 5 },
+  chapter06E: { affection: 30, invasion: 1, dependencyMin: 2, dependencyMax: 4, earthEmpathy: 5 }
 };
+
+const CHAPTER06_ROUTE_IDS = ["chapter06A", "chapter06B", "chapter06C", "chapter06D", "chapter06E"];
 
 function getChapterIndex() {
   return window.NOVEL_CHAPTER_INDEX || [];
@@ -229,40 +225,48 @@ function resolveBranch(current) {
   return matched ? matched.next : current.next;
 }
 
-function resolveChapter06Route() {
-  const params = normalizeParams(state.params);
-  const flags = state.flags || {};
+function determineChapter06Route(params = {}, flags = {}) {
+  const normalizedParams = normalizeParams(params);
   const thresholds = CHAPTER06_ROUTE_THRESHOLDS;
-  const affection = params.affection || 0;
-  const invasion = params.invasion || 0;
-  const dependency = params.dependency || 0;
-  const assimilation = params.assimilation || 0;
-  const earthEmpathy = params.earth_empathy || 0;
-  const freeWillRespect = params.free_will_respect || 0;
+  const affection = normalizedParams.affection || 0;
+  const invasion = normalizedParams.invasion || 0;
+  const dependency = normalizedParams.dependency || 0;
+  const assimilation = normalizedParams.assimilation || 0;
+  const earthEmpathy = normalizedParams.earth_empathy || 0;
+  const freeWillRespect = normalizedParams.free_will_respect || 0;
 
-  const isChapter06D = affection >= thresholds.highAffection
-    && dependency >= thresholds.highDependency;
+  const isChapter06D = affection >= thresholds.chapter06D.affection
+    && dependency >= thresholds.chapter06D.dependency;
   if (isChapter06D) return "chapter06D";
 
-  const isChapter06A = affection >= thresholds.veryHighAffection
-    && invasion <= thresholds.mediumInvasionMin
-    && (freeWillRespect >= thresholds.highFreeWillRespect || flags.respected_riina_free_will === true);
+  const isChapter06A = affection >= thresholds.chapter06A.affection
+    && invasion === thresholds.chapter06A.invasion
+    && (freeWillRespect >= thresholds.chapter06A.freeWillRespect || flags.respected_riina_free_will === true);
   if (isChapter06A) return "chapter06A";
 
-  const isChapter06B = affection >= thresholds.highAffection
-    && invasion >= thresholds.highInvasion
-    && assimilation >= thresholds.highAssimilation
+  const isChapter06B = affection >= thresholds.chapter06B.affection
+    && invasion === thresholds.chapter06B.invasion
+    && assimilation >= thresholds.chapter06B.assimilation
     && flags.has_alienization_flag === true;
   if (isChapter06B) return "chapter06B";
 
-  const isChapter06E = affection >= thresholds.highAffection
-    && invasion >= thresholds.mediumInvasionMin
-    && invasion <= thresholds.mediumInvasionMax
-    && dependency <= thresholds.mediumDependencyMax
-    && (earthEmpathy >= thresholds.highEarthEmpathy || flags.has_earthling_path_flag === true);
+  const isChapter06E = affection >= thresholds.chapter06E.affection
+    && invasion === thresholds.chapter06E.invasion
+    && dependency >= thresholds.chapter06E.dependencyMin
+    && dependency <= thresholds.chapter06E.dependencyMax
+    && (earthEmpathy >= thresholds.chapter06E.earthEmpathy || flags.has_earthling_path_flag === true);
   if (isChapter06E) return "chapter06E";
 
   return "chapter06C";
+}
+
+function resolveChapter06Route() {
+  const flags = state.flags || {};
+  if (CHAPTER06_ROUTE_IDS.includes(flags.chapter06_route)) return flags.chapter06_route;
+
+  const route = determineChapter06Route(state.params, flags);
+  state.flags.chapter06_route = route;
+  return route;
 }
 
 function applyFlagSet(flags = {}) {
@@ -539,6 +543,14 @@ function bindEvents() {
   on(elements.closeBacklogButton, "click", () => elements.backlogDialog.close());
   on(elements.closeParamsButton, "click", () => elements.paramsDialog.close());
 }
+
+window.NOVEL_DEBUG = {
+  state,
+  determineChapter06Route,
+  resolveChapter06Route,
+  save,
+  load
+};
 
 renderChapterList();
 bindEvents();
