@@ -1,0 +1,8 @@
+node_modules/
+dist/
+backup/
+tmp/
+old/
+*.zip
+*.psd
+.DS_Store
