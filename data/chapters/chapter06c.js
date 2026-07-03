@@ -15,16 +15,16 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "大気圏の外側に、銀緑色の点がいくつも灯っている。母星艦隊の先遣標識だ。" },
         { speaker: "ネム", text: "ヴェルディア主力艦隊、月軌道外縁へ到達。地球制圧作戦フェーズ1を要求しています" },
         { speaker: "protagonist", text: "本当に、始まるのか" },
-        { speaker: "liina", text: "肯定。第5章終了時点の計測では、地球側防衛準備は不十分。制圧成功率は高い" },
+        { speaker: "liina", text: "肯定。現時点の計測では、地球側防衛準備は不十分。制圧成功率は高い" },
         { speaker: "", text: "リィナの声はいつも通り平坦だった。けれど、アンテナの先端だけが、微かに震えている。" },
         { speaker: "liina", text: "私は侵略者。そう設計され、そう命令されている" },
         { speaker: "protagonist", text: "でも、迷ってる" },
         { speaker: "liina", text: "……迷いは、作戦効率を下げる重大な異常" },
         { speaker: "", text: "その異常を、彼女はまだ消せずにいた。" }
       ],
-      next: "mothership ultimatum"
+      next: "mothership_ultimatum"
     },
-    "mothership ultimatum": {
+    mothership_ultimatum: {
       label: "母星からの最後通告",
       background: "control_room",
       characters: [{ id: "liina", position: "center", expression: "neutral" }],
@@ -58,9 +58,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "君が地球を守るために私との別離を受け入れるなら、私は取引材料になる。感情を捨て、母星へ戻る" },
         { speaker: "liina", text: "君が私に反発を望むなら、私は母星命令へ逆らう。ただし、敗北すれば私は私でなくなる" },
         { speaker: "protagonist", text: "どれも、誰かが壊れる選択じゃないか" },
-        { speaker: "liina", text: "第6章Cは、そういうルート。地球制圧作戦に入った時点で、完全な無傷の解は残っていない" },
+        { speaker: "liina", text: "地球制圧作戦に入った時点で、完全な無傷の解は残っていない" },
         { speaker: "", text: "それでも、選ばなければならない。" },
-        { speaker: "", text: "このルートから到達する結末は、C1、C2、C3の三つだけだ。" }
+        { speaker: "", text: "選べる未来は三つ。地球を差し出すか、私を差し出すか、届かない反逆へ賭けるかだ。" }
       ],
       next: "final_choice"
     },
@@ -175,6 +175,16 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "protagonist", text: "さよなら、リィナ" },
         { speaker: "liina", text: "さよなら、地球個体001。……さよなら、私の異常" },
         { speaker: "", text: "UFOが遠ざかる。朝焼けの空に、銀緑の光が一筋だけ残った。" },
+        { speaker: "", text: "それから数週間、世界は何も知らないまま日常へ戻っていった。" },
+        { speaker: "", text: "ニュースは未確認飛行物体の噂を都市伝説として処理し、学校では期末試験の範囲が発表され、コンビニの棚にはいつものプリンが並んだ。" },
+        { speaker: "", text: "けれど、主人公だけは空を見上げる癖が抜けなかった。" },
+        { speaker: "protagonist", text: "今日も、晴れてるな" },
+        { speaker: "", text: "ポケットの中には、リィナが残した小さなデータ結晶がある。再生できる機械は地球に存在しない。それでも捨てられない。" },
+        { speaker: "", text: "ある夜、結晶が一度だけ淡く光った。" },
+        { speaker: "liina", text: "記録補足。地球の朝焼けは、侵略対象としては非効率なほど美しい" },
+        { speaker: "", text: "それは過去の録音なのか、遠い宇宙から届いた通信なのか分からなかった。" },
+        { speaker: "protagonist", text: "……さよなら、侵略者" },
+        { speaker: "", text: "返事はない。それでも、地球を守った代償が確かに存在したことだけは、胸の奥に残り続けた。" },
         { speaker: "", text: "エンディングC2：さよなら、侵略者" }
       ],
       choices: [
@@ -200,6 +210,18 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "反逆は届かなかった。好きになった侵略者は、侵略者でいることを強制された。" },
         { speaker: "liina", text: "地球制圧作戦を再開する" },
         { speaker: "", text: "その無表情に、ほんの一瞬だけ、消しきれなかった涙の跡が光った気がした。" },
+        { speaker: "", text: "数日後、地球の空には銀緑の管理標識が浮かぶようになった。人々は恐怖し、抵抗し、やがて沈黙を覚えていく。" },
+        { speaker: "", text: "主人公は監視区画の窓から、かつてリィナと眺めた青い星を見下ろしていた。" },
+        { speaker: "protagonist", text: "リィナ。プリンって、覚えてるか" },
+        { speaker: "liina", text: "地球由来の糖脂質加工食品。先遣調査時の嗜好データに記録あり" },
+        { speaker: "protagonist", text: "好きだったんだよ。君が" },
+        { speaker: "liina", text: "該当感情データは削除済み" },
+        { speaker: "", text: "彼女は淡々と答え、端末へ制圧報告を入力する。そこに迷いはない。" },
+        { speaker: "", text: "だが報告書の末尾に、不要な一文が混じっていた。" },
+        { speaker: "", text: "『地球個体001は、監視対象として継続保護する』" },
+        { speaker: "", text: "命令だけの宇宙人になっても、消しきれなかった何かが、彼女の指先に残っているのかもしれない。" },
+        { speaker: "liina", text: "私は、宇宙人。侵略者。それ以外は不要" },
+        { speaker: "", text: "その言葉は、誰よりも彼女自身へ向けられているように聞こえた。" },
         { speaker: "", text: "エンディングC3：私は、宇宙人。" }
       ],
       choices: [
@@ -222,7 +244,7 @@ window.NOVEL_CHAPTERS.push({
       background: "earth_dome",
       characters: [{ id: "liina", position: "center", expression: "neutral" }],
       lines: [
-        { speaker: "", text: "章選択へ戻ります。第6章Cから到達できる結末はC1、C2、C3のみです。" }
+        { speaker: "", text: "章選択へ戻ります。地球制圧作戦で選べる結末は、C1、C2、C3のみです。" }
       ],
       action: "chapters"
     }
