@@ -32,16 +32,28 @@
 
 ## GitHub Pagesで公開する方法
 
+このリポジトリは GitHub Actions を使わず、GitHub Pages の **Deploy from a branch** でそのまま公開する構成です。
+
 1. GitHub のリポジトリ画面を開きます。
 2. **Settings > Pages** を開きます。
-3. **Build and deployment** で **Deploy from a branch** を選びます。
-4. Branch は公開したいブランチ、Folder は `/ (root)` を選びます。
-5. 表示されたURLをスマホブラウザで開くと遊べます。
+3. **Build and deployment** の **Source** で **Deploy from a branch** を選びます。
+4. **Branch** は `main`、**Folder** は `/ (root)` を選びます。
+5. **Save** を押します。
+6. 表示されたURLをスマホブラウザで開くと遊べます。
+
+### Pages公開構成の確認
+
+- `index.html` は `main` ブランチのリポジトリ直下（root）に置きます。
+- `index.html` から `style.css`、`script.js`、`data/` 配下の章・設定ファイルを相対パスで読み込みます。
+- 画像は `script.js` から `assets/backgrounds/` と `assets/characters/` を相対パスで参照します。
+- `.nojekyll` を root に置いているため、GitHub Pages の Jekyll 処理を通さず静的ファイルとして配信します。
+- `.github/workflows/` に Pages 用 workflow は置かず、Actions の queued 状態に依存しない公開方法にします。
 
 ## ファイル構成
 
 ```text
-index.html                 # 画面の骨組み
+.nojekyll                  # GitHub PagesでJekyll処理を使わないための空ファイル
+index.html                 # 画面の骨組み（Pagesのroot公開入口）
 style.css                  # スマホ縦画面向けデザイン
 script.js                  # ノベルゲームエンジン本体
 data/characters.js         # キャラクター管理
