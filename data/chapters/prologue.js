@@ -21,7 +21,7 @@ window.NOVEL_CHAPTERS.push({
 
     abduction_choice: {
       label: "銀緑の光",
-      background: "earth_night",
+      background: "abduction_beam",
       characters: [],
       lines: [
         { speaker: "", text: "音はない。\nただ、体が軽くなる。" },
@@ -36,7 +36,7 @@ window.NOVEL_CHAPTERS.push({
 
     try_run: {
       label: "逃走失敗",
-      background: "earth_night",
+      background: "abduction_beam",
       characters: [],
       lines: [
         { speaker: "protagonist", text: "冗談じゃない。こんなの絶対に近づいたらダメなやつだ。" },
@@ -48,7 +48,7 @@ window.NOVEL_CHAPTERS.push({
 
     try_record: {
       label: "記録失敗",
-      background: "earth_night",
+      background: "abduction_beam",
       characters: [],
       lines: [
         { speaker: "protagonist", text: "せめて証拠を……って、指が震えてる。" },
@@ -60,7 +60,7 @@ window.NOVEL_CHAPTERS.push({
 
     try_call: {
       label: "声は届かない",
-      background: "earth_night",
+      background: "abduction_beam",
       characters: [],
       lines: [
         { speaker: "protagonist", text: "誰か――" },
@@ -72,7 +72,7 @@ window.NOVEL_CHAPTERS.push({
 
     blackout: {
       label: "途切れる夜",
-      background: "earth_night",
+      background: "abduction_beam",
       characters: [],
       lines: [
         { speaker: "", text: "緑の光が視界を塗りつぶした。\n足元の道路も、街の音も、遠ざかっていく。" },

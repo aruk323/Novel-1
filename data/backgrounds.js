@@ -82,5 +82,11 @@ window.NOVEL_BACKGROUNDS = {
     name: "夜の公園",
     file: "earth-park-night",
     theme: "earth"
+  },
+  abduction_beam: {
+    id: "abduction_beam",
+    name: "アブダクション中の夜空",
+    file: "",
+    theme: "earth"
   }
 };

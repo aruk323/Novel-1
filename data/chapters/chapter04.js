@@ -53,10 +53,10 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "反発を確認。予測済み。でも、胸部圧迫が強い。原因不明。" }
       ],
       choices: [
-        { text: "地球を傷つけないでほしいと言う", set: { freeWill: 1, affection: 1, invasionResistance: 1 }, next: "reaction_spare_earth" },
-        { text: "リィナ自身はどうしたいのか聞く", set: { trust: 1, freeWill: 1 }, next: "reaction_ask_will" },
-        { text: "侵略計画の詳細をもっと知る", set: { curiosity: 1, invasionKnowledge: 1 }, next: "reaction_plan_detail" },
-        { text: "リィナの命令なら従うのか尋ねる", set: { caution: 1, commandDoubt: 1 }, next: "reaction_command_doubt" }
+        { text: "地球を傷つけないでほしいと言う", set: { freeWill: 1, affection: 1, invasionResistance: 1 }, params: { affection: 1, free_will_respect: 1, wariness: 1, invasion: -1 }, next: "reaction_spare_earth" },
+        { text: "リィナ自身はどうしたいのか聞く", set: { trust: 1, freeWill: 1 }, params: { affection: 1, free_will_respect: 1 }, effects: { flags: { respected_riina_free_will: true } }, next: "reaction_ask_will" },
+        { text: "侵略計画の詳細をもっと知る", set: { curiosity: 1, invasionKnowledge: 1 }, params: { invasion: 1 }, next: "reaction_plan_detail" },
+        { text: "リィナの命令なら従うのか尋ねる", set: { caution: 1, commandDoubt: 1 }, params: { wariness: 1 }, next: "reaction_command_doubt" }
       ]
     },
 
@@ -151,8 +151,8 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "機密情報。君の閲覧権限はない。あと、見ないで。" }
       ],
       choices: [
-        { text: "愛着形成をからかう", set: { affection: 1, dependence: 1 }, next: "diagnosis_tease" },
-        { text: "無理に消さなくていいと言う", set: { trust: 1, freeWill: 1 }, next: "diagnosis_keep" },
+        { text: "愛着形成をからかう", set: { affection: 1, dependence: 1 }, params: { affection: 1, dependency: 1 }, next: "diagnosis_tease" },
+        { text: "無理に消さなくていいと言う", set: { trust: 1, freeWill: 1 }, params: { affection: 1, free_will_respect: 1 }, next: "diagnosis_keep" },
         { text: "診断ログを詳しく読む", set: { curiosity: 1, emotionKnowledge: 1 }, next: "diagnosis_read" }
       ]
     },
@@ -247,10 +247,10 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "protagonist", text: "それでも、何も言わないよりはいい。" }
       ],
       choices: [
-        { text: "自分の意思は奪わせない", set: { brainwashReject: 1, freeWill: 1 }, next: "command_reject_brainwash" },
-        { text: "リィナを感情汚染なんて呼ばせない", set: { affection: 1, trust: 1 }, next: "command_defend_liina" },
-        { text: "同族化について条件を聞く", set: { curiosity: 1, assimilationInterest: 1 }, next: "command_ask_assimilation" },
-        { text: "リィナの判断を信じる", set: { trust: 1, dependence: 1 }, next: "command_trust_liina" }
+        { text: "自分の意思は奪わせない", set: { brainwashReject: 1, freeWill: 1 }, params: { free_will_respect: 1, wariness: 1 }, next: "command_reject_brainwash" },
+        { text: "リィナを感情汚染なんて呼ばせない", set: { affection: 1, trust: 1 }, params: { affection: 2 }, next: "command_defend_liina" },
+        { text: "同族化について条件を聞く", set: { curiosity: 1, assimilationInterest: 1 }, params: { assimilation: 1 }, next: "command_ask_assimilation" },
+        { text: "リィナの判断を信じる", set: { trust: 1, dependence: 1 }, params: { affection: 1, dependency: 1 }, next: "command_trust_liina" }
       ]
     },
 
@@ -366,10 +366,10 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "君は、私が地球を侵略したら、私を嫌う？" }
       ],
       choices: [
-        { text: "嫌いになる前に止める", set: { freeWill: 1, invasionResistance: 1 }, next: "final_stop_before_hate" },
-        { text: "リィナが選ぶまで隣にいる", set: { affection: 1, trust: 1 }, next: "final_stay_until_choice" },
-        { text: "洗脳や支配なら拒む", set: { brainwashReject: 1, caution: 1 }, next: "final_reject_control" },
-        { text: "同族化でも自由意思は残してほしい", set: { assimilationInterest: 1, freeWill: 1 }, next: "final_free_assimilation" }
+        { text: "嫌いになる前に止める", set: { freeWill: 1, invasionResistance: 1 }, params: { free_will_respect: 1, wariness: 1, invasion: -1 }, next: "final_stop_before_hate" },
+        { text: "リィナが選ぶまで隣にいる", set: { affection: 1, trust: 1 }, params: { affection: 2 }, next: "final_stay_until_choice" },
+        { text: "洗脳や支配なら拒む", set: { brainwashReject: 1, caution: 1 }, params: { wariness: 1 }, next: "final_reject_control" },
+        { text: "同族化でも自由意思は残してほしい", set: { assimilationInterest: 1, freeWill: 1 }, params: { free_will_respect: 1, assimilation: 1 }, effects: { flags: { has_alienization_flag: true, refused_mind_control: true } }, next: "final_free_assimilation" }
       ]
     },
 

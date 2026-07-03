@@ -59,10 +59,10 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "リィナはカプセルではなく、こちらを見ていた。\n観察者の目ではない。答えを待つ目だった。" }
       ],
       choices: [
-        { text: "リィナを信じて装置に入る", set: { assimilationInterest: 1, affection: 1, trust: 1 }, next: "device_reaction_trust" },
-        { text: "絶対に拒否する", set: { brainwashReject: 1, freeWill: 1 }, next: "device_reaction_refuse" },
-        { text: "洗脳なしなら受け入れる", set: { brainwashReject: 1, assimilationInterest: 1, trust: 1 }, next: "device_reaction_condition" },
-        { text: "リィナも地球人になればいいと言う", set: { earthHumanize: 1, affection: 1 }, next: "device_reaction_earth" }
+        { text: "リィナを信じて装置に入る", set: { assimilationInterest: 1, affection: 1, trust: 1 }, params: { affection: 2, assimilation: 1 }, effects: { flags: { has_alienization_flag: true } }, next: "device_reaction_trust" },
+        { text: "絶対に拒否する", set: { brainwashReject: 1, freeWill: 1 }, params: { free_will_respect: 1, wariness: 1 }, effects: { flags: { refused_mind_control: true } }, next: "device_reaction_refuse" },
+        { text: "洗脳なしなら受け入れる", set: { brainwashReject: 1, assimilationInterest: 1, trust: 1 }, params: { affection: 1, wariness: 1, assimilation: 1 }, effects: { flags: { has_alienization_flag: true, refused_mind_control: true } }, next: "device_reaction_condition" },
+        { text: "リィナも地球人になればいいと言う", set: { earthHumanize: 1, affection: 1 }, params: { affection: 1, earth_empathy: 2, free_will_respect: 1 }, effects: { flags: { has_earthling_path_flag: true } }, next: "device_reaction_earth" }
       ]
     },
 
@@ -162,9 +162,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "リィナの声は平らだった。\nけれど、記録窓の中の彼女は一度だけ、誰もいない扉を見ていた。" }
       ],
       choices: [
-        { text: "リィナは命令の道具じゃない", set: { freeWill: 1, affection: 1 }, next: "memory_reaction_free" },
-        { text: "その孤独を利用したくない", set: { brainwashReject: 1, trust: 1 }, next: "memory_reaction_protect" },
-        { text: "それでもリィナの力を知りたい", set: { assimilationInterest: 1, curiosity: 1 }, next: "memory_reaction_curiosity" }
+        { text: "リィナは命令の道具じゃない", set: { freeWill: 1, affection: 1 }, params: { affection: 1, free_will_respect: 1 }, effects: { flags: { respected_riina_free_will: true } }, next: "memory_reaction_free" },
+        { text: "その孤独を利用したくない", set: { brainwashReject: 1, trust: 1 }, params: { affection: 1, wariness: 1 }, next: "memory_reaction_protect" },
+        { text: "それでもリィナの力を知りたい", set: { assimilationInterest: 1, curiosity: 1 }, params: { assimilation: 1 }, next: "memory_reaction_curiosity" }
       ]
     },
 
@@ -240,9 +240,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "地球人の即興性に期待する。少しだけ。" }
       ],
       choices: [
-        { text: "リィナを責めるなら自分を見ろと言う", set: { affection: 1, freeWill: 1 }, next: "drone_reaction_shield" },
-        { text: "その報告を逆に利用しようと提案する", set: { invasionInterest: 1, curiosity: 1 }, next: "drone_reaction_hack" },
-        { text: "地球人は管理されるだけじゃないと言う", set: { invasionResistance: 1, freeWill: 1 }, next: "drone_reaction_resist" }
+        { text: "リィナを責めるなら自分を見ろと言う", set: { affection: 1, freeWill: 1 }, params: { affection: 1, free_will_respect: 1 }, next: "drone_reaction_shield" },
+        { text: "その報告を逆に利用しようと提案する", set: { invasionInterest: 1, curiosity: 1 }, params: { invasion: 1 }, next: "drone_reaction_hack" },
+        { text: "地球人は管理されるだけじゃないと言う", set: { invasionResistance: 1, freeWill: 1 }, params: { free_will_respect: 1, wariness: 1, invasion: -1 }, next: "drone_reaction_resist" }
       ]
     },
 
@@ -340,9 +340,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "今しか言えない。通常時の私は、たぶん認めない。" }
       ],
       choices: [
-        { text: "自分の意思で選んでと言う", set: { freeWill: 1, trust: 1 }, next: "heart_reaction_choice" },
-        { text: "一緒に別の方法を探そうと言う", set: { affection: 1, brainwashReject: 1 }, next: "heart_reaction_together" },
-        { text: "離れたくないと正直に言う", set: { dependency: 1, affection: 1 }, next: "heart_reaction_stay" }
+        { text: "自分の意思で選んでと言う", set: { freeWill: 1, trust: 1 }, params: { affection: 1, free_will_respect: 1 }, effects: { flags: { respected_riina_free_will: true } }, next: "heart_reaction_choice" },
+        { text: "一緒に別の方法を探そうと言う", set: { affection: 1, brainwashReject: 1 }, params: { affection: 1, wariness: 1 }, effects: { flags: { refused_mind_control: true } }, next: "heart_reaction_together" },
+        { text: "離れたくないと正直に言う", set: { dependency: 1, affection: 1 }, params: { affection: 1, dependency: 1 }, next: "heart_reaction_stay" }
       ]
     },
 
