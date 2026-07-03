@@ -468,7 +468,7 @@ function renderChapterList() {
 
 function openBacklog() {
   elements.backlogList.innerHTML = "";
-  state.backlog.forEach((entry) => {
+  [...state.backlog].reverse().forEach((entry) => {
     const item = document.createElement("div");
     item.className = "backlog-line";
     item.innerHTML = `<strong>${entry.speaker}</strong><br>${entry.text}`;
