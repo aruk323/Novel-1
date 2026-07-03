@@ -193,25 +193,25 @@
 
 条件：
 
-- `affection` が非常に高い。
-- `invasion` が低め。
-- `free_will_respect` が高い、または `respected_riina_free_will` が立っている。
+- `affection` が50以上
+- `invasion` が0
+- `free_will_respect` が20以上、または `respected_riina_free_will` が立っている。
 - リィナを母星の命令ではなく、自分の意思で未来を選ぶ存在として扱っている。
 
 ### 5.2 第6章B：銀緑の同族
 
 条件：
 
-- `affection` が高い。
-- `invasion` が高い。
-- `assimilation` が高い。
+- `affection` が30以上。
+- `invasion` が2。
+- `assimilation` が3以上。
 - `has_alienization_flag` が立っている。
 
 ### 5.3 第6章C：地球制圧作戦
 
 条件：
 
-- `invasion` が最も高い。
+- `invasion` が2。
 - または、第6章A、B、D、Eのいずれにも当てはまらない。
 
 第6章Cは、侵略度が最大の場合のルートであると同時に、フォールバック先でもある。
@@ -220,18 +220,17 @@
 
 条件：
 
-- `affection` が高い。
-- `dependency` が高い。
-- リィナの主人公への想いが、信頼よりも独占・隔離へ傾いている。
+- `affection` が40以上。
+- `dependency` が5。
 
 ### 5.5 第6章E：彼女が地球を選ぶ日
 
 条件：
 
-- `affection` が高い。
-- `invasion` が中程度。
-- `dependency` が中程度。
-- `earth_empathy` が高い、または `has_earthling_path_flag` が立っている。
+- `affection` が30以上。
+- `invasion` が1。
+- `dependency` が2〜4。
+- `earth_empathy` が5以上、または `has_earthling_path_flag` が立っている。
 
 ---
 
@@ -344,6 +343,7 @@
 - 第6章Eに入っている。
 - `sealed_antenna_power` が立っている。
 - `has_earthling_path_flag` が立っている、または地球人に近い存在として生きる選択をしている。
+- リィナが宇宙人としての能力を封印し地球人らしい感情を完全に得る。
 
 #### エンディング9：実験失敗コメディエンド「バグった恋愛侵略」
 
