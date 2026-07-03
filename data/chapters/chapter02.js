@@ -35,9 +35,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "リィナは首を少し傾けた。\nアンテナの先が、こちらの言葉を測るように小さく明滅する。" }
       ],
       choices: [
-        { text: "睡眠中の映像保存をやめてほしい", set: { privacy: 1, trust: 1 }, next: "privacy_sleep_reaction" },
-        { text: "観察するなら自分もリィナを観察する", set: { curiosity: 1, affection: 1 }, next: "privacy_observe_reaction" },
-        { text: "名前で呼ぶことを生活ルールに入れる", set: { nameWish: 1, affection: 1 }, next: "privacy_name_reaction" }
+        { text: "睡眠中の映像保存をやめてほしい", set: { privacy: 1, trust: 1 }, params: { affection: 1, wariness: 1 }, next: "privacy_sleep_reaction" },
+        { text: "観察するなら自分もリィナを観察する", set: { curiosity: 1, affection: 1 }, params: { affection: 1 }, next: "privacy_observe_reaction" },
+        { text: "名前で呼ぶことを生活ルールに入れる", set: { nameWish: 1, affection: 1 }, params: { affection: 2 }, next: "privacy_name_reaction" }
       ]
     },
 
@@ -108,9 +108,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "では、君が分類して。地球人監修データとして採用する。" }
       ],
       choices: [
-        { text: "まずゲームから教える", set: { culture: 1, curiosity: 1 }, next: "media_game_reaction" },
-        { text: "漫画は感情を学びやすいと勧める", set: { earthCulture: 1, affection: 1 }, next: "media_manga_reaction" },
-        { text: "恋愛ドラマは危険だから後回しにする", set: { caution: 1 }, next: "media_drama_reaction" }
+        { text: "まずゲームから教える", set: { culture: 1, curiosity: 1 }, params: { earth_empathy: 1 }, next: "media_game_reaction" },
+        { text: "漫画は感情を学びやすいと勧める", set: { earthCulture: 1, affection: 1 }, params: { affection: 1, earth_empathy: 1 }, next: "media_manga_reaction" },
+        { text: "恋愛ドラマは危険だから後回しにする", set: { caution: 1 }, params: { wariness: 1 }, next: "media_drama_reaction" }
       ]
     },
 
@@ -179,9 +179,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "差し出された手は冷たそうに見えて、指先だけ淡く光っていた。\nリィナは無表情だが、アンテナの先は落ち着きなく揺れている。" }
       ],
       choices: [
-        { text: "素直に手を繋ぐ", set: { affection: 1, trust: 1 }, next: "hand_accept_reaction" },
-        { text: "嫌になったら離す条件で受ける", set: { trust: 1, freeWill: 1 }, next: "hand_terms_reaction" },
-        { text: "リィナの方が照れてないか聞く", set: { affection: 1, dependence: 1 }, next: "hand_tease_reaction" }
+        { text: "素直に手を繋ぐ", set: { affection: 1, trust: 1 }, params: { affection: 2 }, next: "hand_accept_reaction" },
+        { text: "嫌になったら離す条件で受ける", set: { trust: 1, freeWill: 1 }, params: { affection: 1, free_will_respect: 1 }, next: "hand_terms_reaction" },
+        { text: "リィナの方が照れてないか聞く", set: { affection: 1, dependence: 1 }, params: { affection: 1, dependency: 1 }, next: "hand_tease_reaction" }
       ]
     },
 
@@ -253,9 +253,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "一番新しいフォルダ名は、『ユーザーといる時の異常安定』だった。" }
       ],
       choices: [
-        { text: "記録が多すぎて少し怖いと言う", set: { caution: 1, freeWill: 1 }, next: "data_fear_reaction" },
-        { text: "大事に記録してくれたのは分かると言う", set: { affection: 1, trust: 1 }, next: "data_accept_reaction" },
-        { text: "自分にもリィナの記録を作らせてほしい", set: { curiosity: 1, affection: 1 }, next: "data_record_reaction" }
+        { text: "記録が多すぎて少し怖いと言う", set: { caution: 1, freeWill: 1 }, params: { free_will_respect: 1, wariness: 1 }, next: "data_fear_reaction" },
+        { text: "大事に記録してくれたのは分かると言う", set: { affection: 1, trust: 1 }, params: { affection: 2 }, next: "data_accept_reaction" },
+        { text: "自分にもリィナの記録を作らせてほしい", set: { curiosity: 1, affection: 1 }, params: { affection: 1 }, next: "data_record_reaction" }
       ]
     },
 

@@ -478,3 +478,108 @@ STORY_BIBLE上の「主人公が地球を守るためにリィナと別れるル
 - 第6章Eから到達するエンディングは2個。
 - 合計エンディング数は9個。
 - どの条件にも当てはまらない場合、第6章Cへ進む。
+
+---
+
+## 12. 第1章〜第5章の選択肢別パラメータ変化
+
+この表は、実装済みの第1章〜第5章の選択肢が、ルート分岐用の `params` と補助フラグをどのように変化させるかを示す。既存の `set` は従来のフラグ互換のために残し、ルート判定用の数値は `params`、第6章分岐に必要な明示フラグは `effects.flags` で追加する。
+
+### 12.1 第1章
+
+| 選択肢 | params |
+|---|---|
+| 近いから照れていると正直に言う | `affection +2` |
+| 逃げる準備だと強がる | `wariness +1` |
+| サンプル呼びをまず訂正する | `affection +1` |
+| 正直に、失敗だと伝える | `affection +2` |
+| 文化調査として一口だけ食べる | `affection +2` |
+| プリンだけ別にしてほしいと頼む | `earth_empathy +1` |
+| それでも地球へ帰りたいと言う | `wariness +1`, `invasion -1` |
+| 心配してくれたのかと聞く | `affection +1` |
+
+### 12.2 第2章
+
+| 選択肢 | params |
+|---|---|
+| 睡眠中の映像保存をやめてほしい | `affection +1`, `wariness +1` |
+| 観察するなら自分もリィナを観察する | `affection +1` |
+| 名前で呼ぶことを生活ルールに入れる | `affection +2` |
+| まずゲームから教える | `earth_empathy +1` |
+| 漫画は感情を学びやすいと勧める | `affection +1`, `earth_empathy +1` |
+| 恋愛ドラマは危険だから後回しにする | `wariness +1` |
+| 素直に手を繋ぐ | `affection +2` |
+| 嫌になったら離す条件で受ける | `affection +1`, `free_will_respect +1` |
+| リィナの方が照れてないか聞く | `affection +1`, `dependency +1` |
+| 記録が多すぎて少し怖いと言う | `free_will_respect +1`, `wariness +1` |
+| 大事に記録してくれたのは分かると言う | `affection +2` |
+| 自分にもリィナの記録を作らせてほしい | `affection +1` |
+
+### 12.3 第3章
+
+| 選択肢 | params |
+|---|---|
+| 白いパーカーを勧める | `affection +1`, `earth_empathy +1` |
+| 制服風の服を選ぶ | `earth_empathy +1` |
+| 黒いジャケットで目立たなくする | `free_will_respect +1`, `wariness +1` |
+| リィナ自身に選ばせる | `affection +1`, `free_will_respect +1` |
+| プリンを買ってあげる | `affection +1`, `earth_empathy +1` |
+| リィナに自分で選ばせる | `affection +1`, `free_will_respect +1` |
+| 半分ずつ食べようと提案する | `affection +1`, `dependency +1` |
+| まず成分表示から説明する | `wariness +1` |
+| 親戚という設定でごまかす | `wariness +1` |
+| 交換留学生という設定にする | `earth_empathy +1` |
+| リィナに地球の距離感を教える | `affection +1`, `free_will_respect +1` |
+| カフェで休む | `affection +1`, `earth_empathy +1` |
+| ゲームセンターへ行く | `affection +1` |
+| 公園で静かに話す | `affection +1`, `free_will_respect +1` |
+| 感情は選ぶ理由になると言う | `affection +1`, `free_will_respect +1` |
+| 効率が悪くても大事なものはあると言う | `affection +1`, `earth_empathy +1` |
+| リィナ自身はどうしたいか聞く | `affection +1`, `free_will_respect +1` |
+| 危険なら任せる | `affection +1`, `wariness +1` |
+| 壊さずに止めてほしい | `free_will_respect +1`, `earth_empathy +1` |
+| 一緒に隠れる方法を探す | `affection +2` |
+
+### 12.4 第4章
+
+| 選択肢 | params | effects.flags |
+|---|---|---|
+| 地球を傷つけないでほしいと言う | `affection +1`, `free_will_respect +1`, `wariness +1`, `invasion -1` |  |
+| リィナ自身はどうしたいのか聞く | `affection +1`, `free_will_respect +1` | `respected_riina_free_will` |
+| 侵略計画の詳細をもっと知る | `invasion +1` |  |
+| リィナの命令なら従うのか尋ねる | `wariness +1` |  |
+| 愛着形成をからかう | `affection +1`, `dependency +1` |  |
+| 無理に消さなくていいと言う | `affection +1`, `free_will_respect +1` |  |
+| 自分の意思は奪わせない | `free_will_respect +1`, `wariness +1` |  |
+| リィナを感情汚染なんて呼ばせない | `affection +2` |  |
+| 同族化について条件を聞く | `assimilation +1` |  |
+| リィナの判断を信じる | `affection +1`, `dependency +1` |  |
+| 嫌いになる前に止める | `free_will_respect +1`, `wariness +1`, `invasion -1` |  |
+| リィナが選ぶまで隣にいる | `affection +2` |  |
+| 洗脳や支配なら拒む | `wariness +1` |  |
+| 同族化でも自由意思は残してほしい | `free_will_respect +1`, `assimilation +1` | `has_alienization_flag`, `refused_mind_control` |
+
+### 12.5 第5章
+
+| 選択肢 | params | effects.flags |
+|---|---|---|
+| リィナを信じて装置に入る | `affection +2`, `assimilation +1` | `has_alienization_flag` |
+| 絶対に拒否する | `free_will_respect +1`, `wariness +1` | `refused_mind_control` |
+| 洗脳なしなら受け入れる | `affection +1`, `wariness +1`, `assimilation +1` | `has_alienization_flag`, `refused_mind_control` |
+| リィナも地球人になればいいと言う | `affection +1`, `earth_empathy +2`, `free_will_respect +1` | `has_earthling_path_flag` |
+| リィナは命令の道具じゃない | `affection +1`, `free_will_respect +1` | `respected_riina_free_will` |
+| その孤独を利用したくない | `affection +1`, `wariness +1` |  |
+| それでもリィナの力を知りたい | `assimilation +1` |  |
+| リィナを責めるなら自分を見ろと言う | `affection +1`, `free_will_respect +1` |  |
+| その報告を逆に利用しようと提案する | `invasion +1` |  |
+| 地球人は管理されるだけじゃないと言う | `free_will_respect +1`, `wariness +1`, `invasion -1` |  |
+| 自分の意思で選んでと言う | `affection +1`, `free_will_respect +1` | `respected_riina_free_will` |
+| 一緒に別の方法を探そうと言う | `affection +1`, `wariness +1` | `refused_mind_control` |
+| 離れたくないと正直に言う | `affection +1`, `dependency +1` |  |
+
+### 12.6 バランス方針
+
+- 1つの選択肢で変化する値は原則 `+1`、強い関係進行や第5章の重要選択肢のみ `+2` とする。
+- `invasion` は、地球侵略への理解や利用提案で上げ、地球防衛や侵略拒否で下げる。
+- `dependency` は、接触・独占・離れたくない感情に寄る選択肢だけで上げる。
+- 第5章終了時に第6章A〜Eのいずれにも該当しない場合は、第6章Cへフォールバックする。

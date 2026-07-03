@@ -38,10 +38,10 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "偽装でアンテナは見えなくなる。\nそれでも、緑の瞳だけは少しだけ星の色を残していた。" }
       ],
       choices: [
-        { text: "白いパーカーを勧める", set: { earthCulture: 1, affection: 1 }, next: "outfit_hoodie" },
-        { text: "制服風の服を選ぶ", set: { schoolFlag: 1, curiosity: 1 }, next: "outfit_uniform" },
-        { text: "黒いジャケットで目立たなくする", set: { caution: 1, freeWill: 1 }, next: "outfit_jacket" },
-        { text: "リィナ自身に選ばせる", set: { freeWill: 1, trust: 1 }, next: "outfit_liina_choice" }
+        { text: "白いパーカーを勧める", set: { earthCulture: 1, affection: 1 }, params: { affection: 1, earth_empathy: 1 }, next: "outfit_hoodie" },
+        { text: "制服風の服を選ぶ", set: { schoolFlag: 1, curiosity: 1 }, params: { earth_empathy: 1 }, next: "outfit_uniform" },
+        { text: "黒いジャケットで目立たなくする", set: { caution: 1, freeWill: 1 }, params: { free_will_respect: 1, wariness: 1 }, next: "outfit_jacket" },
+        { text: "リィナ自身に選ばせる", set: { freeWill: 1, trust: 1 }, params: { affection: 1, free_will_respect: 1 }, next: "outfit_liina_choice" }
       ]
     },
     outfit_hoodie: {
@@ -126,10 +126,10 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "protagonist", text: "プリンを外交カードみたいに扱わないで。" }
       ],
       choices: [
-        { text: "プリンを買ってあげる", set: { affection: 1, earthCulture: 1 }, next: "pudding_gift" },
-        { text: "リィナに自分で選ばせる", set: { freeWill: 1, trust: 1 }, next: "pudding_choice" },
-        { text: "半分ずつ食べようと提案する", set: { affection: 1, dependence: 1 }, next: "pudding_share" },
-        { text: "まず成分表示から説明する", set: { curiosity: 1, caution: 1 }, next: "pudding_label" }
+        { text: "プリンを買ってあげる", set: { affection: 1, earthCulture: 1 }, params: { affection: 1, earth_empathy: 1 }, next: "pudding_gift" },
+        { text: "リィナに自分で選ばせる", set: { freeWill: 1, trust: 1 }, params: { affection: 1, free_will_respect: 1 }, next: "pudding_choice" },
+        { text: "半分ずつ食べようと提案する", set: { affection: 1, dependence: 1 }, params: { affection: 1, dependency: 1 }, next: "pudding_share" },
+        { text: "まず成分表示から説明する", set: { curiosity: 1, caution: 1 }, params: { wariness: 1 }, next: "pudding_label" }
       ]
     },
     pudding_gift: {
@@ -199,9 +199,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "知り合いは、気まずい笑顔だけを残して去っていった。" }
       ],
       choices: [
-        { text: "親戚という設定でごまかす", set: { caution: 1 }, next: "school_cover_relative" },
-        { text: "交換留学生という設定にする", set: { earthCulture: 1, curiosity: 1 }, next: "school_cover_exchange" },
-        { text: "リィナに地球の距離感を教える", set: { freeWill: 1, trust: 1 }, next: "school_cover_distance" }
+        { text: "親戚という設定でごまかす", set: { caution: 1 }, params: { wariness: 1 }, next: "school_cover_relative" },
+        { text: "交換留学生という設定にする", set: { earthCulture: 1, curiosity: 1 }, params: { earth_empathy: 1 }, next: "school_cover_exchange" },
+        { text: "リィナに地球の距離感を教える", set: { freeWill: 1, trust: 1 }, params: { affection: 1, free_will_respect: 1 }, next: "school_cover_distance" }
       ]
     },
     school_cover_relative: {
@@ -256,9 +256,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "リィナは少しだけ歩幅を合わせてくる。\n偽装のため、と言い訳するには自然すぎた。" }
       ],
       choices: [
-        { text: "カフェで休む", set: { earthCulture: 1, affection: 1 }, next: "cafe_scene" },
-        { text: "ゲームセンターへ行く", set: { curiosity: 1, affection: 1 }, next: "arcade_scene" },
-        { text: "公園で静かに話す", set: { trust: 1, freeWill: 1 }, next: "park_scene" }
+        { text: "カフェで休む", set: { earthCulture: 1, affection: 1 }, params: { affection: 1, earth_empathy: 1 }, next: "cafe_scene" },
+        { text: "ゲームセンターへ行く", set: { curiosity: 1, affection: 1 }, params: { affection: 1 }, next: "arcade_scene" },
+        { text: "公園で静かに話す", set: { trust: 1, freeWill: 1 }, params: { affection: 1, free_will_respect: 1 }, next: "park_scene" }
       ]
     },
 
@@ -314,9 +314,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "偽装で隠れているはずのアンテナが、そこにあるみたいに視線が揺れた。" }
       ],
       choices: [
-        { text: "感情は選ぶ理由になると言う", set: { trust: 1, freeWill: 1 }, next: "emotion_reason" },
-        { text: "効率が悪くても大事なものはあると言う", set: { affection: 1, earthCulture: 1 }, next: "emotion_value" },
-        { text: "リィナ自身はどうしたいか聞く", set: { freeWill: 1, affection: 1 }, next: "emotion_will" }
+        { text: "感情は選ぶ理由になると言う", set: { trust: 1, freeWill: 1 }, params: { affection: 1, free_will_respect: 1 }, next: "emotion_reason" },
+        { text: "効率が悪くても大事なものはあると言う", set: { affection: 1, earthCulture: 1 }, params: { affection: 1, earth_empathy: 1 }, next: "emotion_value" },
+        { text: "リィナ自身はどうしたいか聞く", set: { freeWill: 1, affection: 1 }, params: { affection: 1, free_will_respect: 1 }, next: "emotion_will" }
       ]
     },
     emotion_reason: {
@@ -374,9 +374,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "偽装が一瞬だけ剥がれた。\n隠れていたアンテナの先が、鋭い緑に光る。" }
       ],
       choices: [
-        { text: "危険なら任せる", set: { trust: 1, caution: 1 }, next: "drone_liina" },
-        { text: "壊さずに止めてほしい", set: { freeWill: 1, earthCulture: 1 }, next: "drone_nonlethal" },
-        { text: "一緒に隠れる方法を探す", set: { affection: 1, trust: 1 }, next: "drone_hide" }
+        { text: "危険なら任せる", set: { trust: 1, caution: 1 }, params: { affection: 1, wariness: 1 }, next: "drone_liina" },
+        { text: "壊さずに止めてほしい", set: { freeWill: 1, earthCulture: 1 }, params: { free_will_respect: 1, earth_empathy: 1 }, next: "drone_nonlethal" },
+        { text: "一緒に隠れる方法を探す", set: { affection: 1, trust: 1 }, params: { affection: 2 }, next: "drone_hide" }
       ]
     },
     drone_liina: {

@@ -36,9 +36,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "彼女は首を少し傾けた。\n表情は変わらないのに、観察装置だけが忙しく光っている。" }
       ],
       choices: [
-        { text: "近いから照れていると正直に言う", set: { affection: 1, honest: true }, next: "reaction_honest" },
-        { text: "逃げる準備だと強がる", set: { escape: 1, defiant: true }, next: "reaction_defiant" },
-        { text: "サンプル呼びをまず訂正する", set: { nameWish: 1 }, next: "reaction_name" }
+        { text: "近いから照れていると正直に言う", set: { affection: 1, honest: true }, params: { affection: 2 }, next: "reaction_honest" },
+        { text: "逃げる準備だと強がる", set: { escape: 1, defiant: true }, params: { wariness: 1 }, next: "reaction_defiant" },
+        { text: "サンプル呼びをまず訂正する", set: { nameWish: 1 }, params: { affection: 1 }, next: "reaction_name" }
       ]
     },
     reaction_honest: {
@@ -149,9 +149,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "見た目の評価を求める。成功？" }
       ],
       choices: [
-        { text: "正直に、失敗だと伝える", set: { honest: true, affection: 1 }, next: "meal_honest" },
-        { text: "文化調査として一口だけ食べる", set: { trust: 1, affection: 1 }, next: "meal_try" },
-        { text: "プリンだけ別にしてほしいと頼む", set: { pudding: true }, next: "meal_pudding" }
+        { text: "正直に、失敗だと伝える", set: { honest: true, affection: 1 }, params: { affection: 2 }, next: "meal_honest" },
+        { text: "文化調査として一口だけ食べる", set: { trust: 1, affection: 1 }, params: { affection: 2 }, next: "meal_try" },
+        { text: "プリンだけ別にしてほしいと頼む", set: { pudding: true }, params: { earth_empathy: 1 }, next: "meal_pudding" }
       ]
     },
     meal_honest: {
@@ -253,9 +253,9 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "liina", text: "地球は脆い。だが、光は多い。解析には時間が必要。" }
       ],
       choices: [
-        { text: "それでも地球へ帰りたいと言う", set: { earth: 1 }, next: "dome_earth" },
+        { text: "それでも地球へ帰りたいと言う", set: { earth: 1 }, params: { wariness: 1, invasion: -1 }, next: "dome_earth" },
         { text: "なぜ侵略するのか尋ねる", set: { curiosity: 1 }, next: "dome_why" },
-        { text: "心配してくれたのかと聞く", set: { affection: 1 }, next: "dome_soft" }
+        { text: "心配してくれたのかと聞く", set: { affection: 1 }, params: { affection: 1 }, next: "dome_soft" }
       ]
     },
     dome_earth: {
