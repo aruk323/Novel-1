@@ -421,27 +421,17 @@ window.NOVEL_CHAPTERS.push({
         { speaker: "", text: "リィナの心の暴走は、まだ止まっていない。\nそれでも彼女は、初めて命令ではない方向を見ようとしていた。" }
       ],
       choices: [
-        { text: "章選択へ戻る", set: { chapter05Clear: true }, next: "return_chapters" },
-        { text: "タイトルへ戻る", set: { chapter05Clear: true }, next: "return_title" }
+        { text: "第6章へ進む", set: { chapter05Clear: true }, next: "start_chapter06_route" }
       ],
       ending: true
     },
-    return_chapters: {
-      label: "章選択へ戻ります",
+    start_chapter06_route: {
+      label: "第6章へ進みます",
       background: "earth_dome",
       lines: [
-        { speaker: "", text: "章選択へ戻ります。" }
+        { speaker: "", text: "第5章終了時点のパラメータから、第6章A〜Eのルートを判定します。" }
       ],
-      action: "chapters",
-      ending: true
-    },
-    return_title: {
-      label: "タイトルへ戻ります",
-      background: "earth_dome",
-      lines: [
-        { speaker: "", text: "タイトルへ戻ります。" }
-      ],
-      action: "title",
+      action: "chapter06Route",
       ending: true
     }
   }

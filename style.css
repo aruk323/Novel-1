@@ -77,6 +77,19 @@ h2 { font-size: clamp(1.08rem, 4.8vw, 1.45rem); }
 .primary-button, .next-button { background: linear-gradient(180deg, var(--accent), var(--accent-dark)); color: #111827; font-weight: 900; }
 .chapter-item { text-align: left; }
 .chapter-item small { display: block; color: var(--muted); margin-top: .25rem; }
+.chapter-group {
+  display: grid;
+  gap: .6rem;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 16px;
+  padding: .6rem;
+  background: rgba(15,23,42,.52);
+}
+.chapter-group summary {
+  cursor: pointer;
+  font-weight: 900;
+  color: #fde68a;
+}
 
 .stage {
   position: relative;
