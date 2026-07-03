@@ -43,11 +43,19 @@
 
 ### Pages公開構成の確認
 
-- `index.html` は `main` ブランチのリポジトリ直下（root）に置きます。
-- `index.html` から `style.css`、`script.js`、`data/` 配下の章・設定ファイルを相対パスで読み込みます。
+- `main` ブランチのリポジトリ直下（root）に `index.html` がある状態で公開します。
+- GitHub Pages の **Branch** は `main`、**Folder** は `/ (root)` を選びます。`docs/` や `gh-pages` ブランチは使いません。
+- `index.html` は `style.css`、`script.js`、`data/` 配下の章・設定ファイルをすべて相対パスで読み込みます。
 - 画像は `script.js` から `assets/backgrounds/` と `assets/characters/` を相対パスで参照します。
 - `.nojekyll` を root に置いているため、GitHub Pages の Jekyll 処理を通さず静的ファイルとして配信します。
-- `.github/workflows/` に Pages 用 workflow は置かず、Actions の queued 状態に依存しない公開方法にします。
+- この静的公開では `.github/workflows/` は不要です。Pages 用 workflow が残っている場合は、削除するか拡張子を `.yml.disabled` などに変えて無効化し、GitHub Actions の失敗に依存しない状態にしてください。
+
+### デプロイ失敗時の確認手順
+
+1. `main` ブランチへ最新コミットを push します。
+2. **Settings > Pages > Build and deployment** で **Source: Deploy from a branch**、**Branch: main / Folder: / (root)** になっていることを確認します。
+3. `.github/workflows/` に Pages 用 workflow がある場合は削除または無効化します。Node.js 20 警告が workflow 由来の場合、branch deploy ではその workflow を使わないため影響を切り分けられます。
+4. 数十秒待ってから Pages のURLをハードリロードします。
 
 ## ファイル構成
 
